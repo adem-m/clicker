@@ -1,6 +1,6 @@
 import { Component } from '@angular/core';
 import { AppService } from './services/app.service';
-import { CookieService } from 'ngx-cookie-service';
+import { CookiesService } from './services/cookies.service';
 
 @Component({
     selector: 'app-root',
@@ -12,18 +12,14 @@ export class AppComponent {
     pointsPerSecond = 0;
     gameStarted = false;
 
-    constructor(private service: AppService, private cookieService: CookieService) {
+    constructor(private service: AppService, private cookieService: CookiesService) {
         this.getCookies();
     }
     getCookies() {
-        if (parseInt(this.cookieService.get('score'), 10) > 0) {
-            this.service.playerScore = parseInt(this.cookieService.get('score'), 10);
-        }
-        if (parseInt(this.cookieService.get('ppc'), 10) > 0) {
-            this.pointsPerClick = parseInt(this.cookieService.get('ppc'), 10);
-        }
-        if (parseInt(this.cookieService.get('pps'), 10) > 0) {
-            this.pointsPerSecond = parseInt(this.cookieService.get('pps'), 10);
+        this.service.playerScore = this.cookieService.getScore();
+        this.pointsPerClick = this.cookieService.getPPC();
+        this.pointsPerSecond = this.cookieService.getPPS();
+        if (this.pointsPerSecond > 0) {
             this.updateScore();
         }
     }
@@ -52,21 +48,21 @@ export class AppComponent {
     }
     updateScore() {
         this.service.playerScore += this.pointsPerClick;
-        this.save(this.service.playerScore.toString());
+        this.save(this.service.playerScore);
         this.variablesUpdate();
         if (!this.gameStarted) {
             this.gameStarted = true;
             this.pointsPerSecond++;
             setInterval(() => {
                 this.service.playerScore += this.pointsPerSecond;
-                this.save(this.service.playerScore.toString());
+                this.save(this.service.playerScore);
             }, 1000);
         }
     }
-    save(score: string) {
-        this.cookieService.set('score', score, 99999);
-        this.cookieService.set('ppc', this.pointsPerClick.toString(), 99999);
-        this.cookieService.set('pps', this.pointsPerSecond.toString(), 99999);
+    save(score: number) {
+        this.cookieService.setScore(score);
+        this.cookieService.setPPC(this.pointsPerClick);
+        this.cookieService.setPPS(this.pointsPerSecond);
     }
     reset() {
         this.service.playerScore = 0;

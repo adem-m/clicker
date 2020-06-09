@@ -1,6 +1,7 @@
 import { BrowserModule } from '@angular/platform-browser';
 import { NgModule } from '@angular/core';
 import { AppService } from './services/app.service';
+import { CookiesService } from './services/cookies.service';
 import { CookieService } from 'ngx-cookie-service';
 
 import { AppRoutingModule } from './app-routing.module';
@@ -18,7 +19,7 @@ import { MatButtonModule } from '@angular/material/button';
     BrowserAnimationsModule,
     MatButtonModule,
   ],
-  providers: [AppService, CookieService],
+  providers: [AppService, CookieService, CookiesService],
   bootstrap: [AppComponent]
 })
 export class AppModule { }
