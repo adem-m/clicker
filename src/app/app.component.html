@@ -1,4 +1,9 @@
 <div class="body">
-  <p>{{ getScore() }}</p>
-  <button mat-raised-button color="primary" (click)="updateScore()">Primary</button>
+  <div>
+    Points per click: {{ pointsPerClick }}
+    Points per second: {{ pointsPerSecond }}
+  </div>
+  <div>{{ getScore() }}</div>
+  <img src="assets/img/1.png" height="300px" (click)="updateScore()"><br>
+  <button mat-raised-button color="warn" (click)="reset()">Reset</button>
 </div>
