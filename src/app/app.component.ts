@@ -24,10 +24,10 @@ export class AppComponent {
         }
     }
     variablesUpdate() {
-        if (Math.floor(Math.random() * 100) === 0) {
+        if (Math.floor(Math.random() * 80) === 0) {
             this.appService.pointsPerClick++;
         }
-        if (Math.floor(Math.random() * 80) === 0) {
+        if (Math.floor(Math.random() * 100) === 0) {
             this.appService.pointsPerSecond++;
         }
     }
