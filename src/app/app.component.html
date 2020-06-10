@@ -1,9 +1,9 @@
 <div class="body">
-  <div>
-    Points per click: {{ pointsPerClick }}
-    Points per second: {{ pointsPerSecond }}
-  </div>
-  <div>{{ getScore() }}</div>
-  <img src="assets/img/1.png" height="300px" (click)="updateScore()"><br>
-  <button mat-raised-button color="warn" (click)="reset()">Reset</button>
+    <div>
+        Points per click: {{ getPPC() }}
+        Points per second: {{ getPPS() }}
+    </div>
+    <div>{{ getScore() }}</div>
+    <img src="assets/img/1.png" height="300px" (click)="updateScore()"><br>
+    <button mat-raised-button color="warn" (click)="openResetDialog()">Reset</button>
 </div>

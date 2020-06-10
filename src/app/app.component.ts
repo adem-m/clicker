@@ -1,6 +1,8 @@
 import { Component } from '@angular/core';
 import { AppService } from './services/app.service';
 import { CookiesService } from './services/cookies.service';
+import { MatDialog } from '@angular/material/dialog';
+import { ResetDialogComponent } from './reset-dialog/reset-dialog.component';
 
 @Component({
     selector: 'app-root',
@@ -8,31 +10,29 @@ import { CookiesService } from './services/cookies.service';
     styleUrls: ['./app.component.scss']
 })
 export class AppComponent {
-    pointsPerClick = 1;
-    pointsPerSecond = 0;
     gameStarted = false;
 
-    constructor(private service: AppService, private cookieService: CookiesService) {
+    constructor(private appService: AppService, private cookieService: CookiesService, public dialog: MatDialog) {
         this.getCookies();
     }
     getCookies() {
-        this.service.playerScore = this.cookieService.getScore();
-        this.pointsPerClick = this.cookieService.getPPC();
-        this.pointsPerSecond = this.cookieService.getPPS();
-        if (this.pointsPerSecond > 0) {
+        this.appService.score = this.cookieService.getScore();
+        this.appService.pointsPerClick = this.cookieService.getPPC();
+        this.appService.pointsPerSecond = this.cookieService.getPPS();
+        if (this.appService.pointsPerSecond > 0) {
             this.updateScore();
         }
     }
     variablesUpdate() {
         if (Math.floor(Math.random() * 100) === 0) {
-            this.pointsPerClick++;
+            this.appService.pointsPerClick++;
         }
         if (Math.floor(Math.random() * 80) === 0) {
-            this.pointsPerSecond++;
+            this.appService.pointsPerSecond++;
         }
     }
     getScore() {
-        const currentScore = this.service.playerScore.toString();
+        const currentScore = this.appService.score.toString();
         let stringBuilder = '';
         for (let i = 0; i < currentScore.length; i++) {
             stringBuilder += currentScore[currentScore.length - i - 1];
@@ -46,27 +46,31 @@ export class AppComponent {
         }
         return newScore;
     }
+    getPPC() {
+        return this.appService.pointsPerClick;
+    }
+    getPPS() {
+        return this.appService.pointsPerSecond;
+    }
     updateScore() {
-        this.service.playerScore += this.pointsPerClick;
-        this.save(this.service.playerScore);
+        this.appService.score += this.appService.pointsPerClick;
+        this.save(this.appService.score);
         this.variablesUpdate();
         if (!this.gameStarted) {
             this.gameStarted = true;
-            this.pointsPerSecond++;
+            this.appService.pointsPerSecond++;
             setInterval(() => {
-                this.service.playerScore += this.pointsPerSecond;
-                this.save(this.service.playerScore);
+                this.appService.score += this.appService.pointsPerSecond;
+                this.save(this.appService.score);
             }, 1000);
         }
     }
     save(score: number) {
         this.cookieService.setScore(score);
-        this.cookieService.setPPC(this.pointsPerClick);
-        this.cookieService.setPPS(this.pointsPerSecond);
+        this.cookieService.setPPC(this.appService.pointsPerClick);
+        this.cookieService.setPPS(this.appService.pointsPerSecond);
     }
-    reset() {
-        this.service.playerScore = 0;
-        this.pointsPerClick = 1;
-        this.pointsPerSecond = 0;
+    openResetDialog() {
+        this.dialog.open(ResetDialogComponent);
     }
 }
