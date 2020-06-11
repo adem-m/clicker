@@ -15,7 +15,7 @@ export class BonusDrawerComponent implements OnInit {
   ppcBonus() {
     if (this.appService.score > 100) {
       this.appService.score -= 100;
-      this.appService.pointsPerClick++;
+      this.appService.pointsPerClick += 2;
     }
   }
   ppsBonus() {
