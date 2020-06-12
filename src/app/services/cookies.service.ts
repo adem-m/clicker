@@ -7,20 +7,38 @@ export class CookiesService {
     constructor(private cookieService: CookieService) {
     }
     getScore() {
-        if (parseInt(this.cookieService.get('score'), 10) > 0) {
+        if (this.cookieService.check('score')) {
             return parseInt(this.cookieService.get('score'), 10);
         }
         return 0;
     }
     getPPC() {
-        if (parseInt(this.cookieService.get('ppc'), 10) > 0) {
+        if (this.cookieService.check('ppc')) {
             return parseInt(this.cookieService.get('ppc'), 10);
         }
         return 1;
     }
     getPPS() {
-        if (parseInt(this.cookieService.get('pps'), 10) > 0) {
+        if (this.cookieService.check('pps')) {
             return parseInt(this.cookieService.get('pps'), 10);
+        }
+        return 0;
+    }
+    getPPCBoost() {
+        if (this.cookieService.check('ppcBoost')) {
+            return parseInt(this.cookieService.get('ppcBoost'), 10);
+        }
+        return 0;
+    }
+    getPPSBoost() {
+        if (this.cookieService.check('ppsBoost')) {
+            return parseInt(this.cookieService.get('ppsBoost'), 10);
+        }
+        return 0;
+    }
+    getDevilDealCharge() {
+        if (this.cookieService.check('devilDealCharge')) {
+            return parseInt(this.cookieService.get('devilDealCharge'), 10);
         }
         return 0;
     }
@@ -32,5 +50,14 @@ export class CookiesService {
     }
     setPPS(pps: number) {
         this.cookieService.set('pps', pps.toString(), 99999);
+    }
+    setPPCBoost(ppcBoost: number) {
+        this.cookieService.set('ppcBoost', ppcBoost.toString(), 99999);
+    }
+    setPPSBoost(ppsBoost: number) {
+        this.cookieService.set('ppsBoost', ppsBoost.toString(), 99999);
+    }
+    setDevilDealCharge(devilDealCharge: number) {
+        this.cookieService.set('devilDealCharge', devilDealCharge.toString(), 99999);
     }
 }

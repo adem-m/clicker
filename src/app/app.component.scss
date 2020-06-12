@@ -1,9 +1,19 @@
 .body {
-    background-color: greenyellow;
+    background-color: rgb(136, 136, 136);
     text-align: center;
 }
 .drawer {
     width: 300px;
+}
+.drawerHeader {
+    display: flex;
+    justify-content: space-between;
+    margin-bottom: 1em;
+}
+.drawerHeader .title {
+    margin: 0.5em;
+    font-size: 2em;
+    font-weight: bold;
 }
 button {
     margin: 8px;

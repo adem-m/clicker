@@ -1,3 +1,12 @@
 button {
     margin: 8px;
 }
+.bonus {
+    display: flex;
+    justify-content: space-evenly;
+    align-items: center;
+}
+mat-progress-bar {
+    margin: 0.5em auto;
+    width: 100px;
+}

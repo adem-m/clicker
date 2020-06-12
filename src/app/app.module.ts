@@ -14,6 +14,9 @@ import { MatDialogModule } from '@angular/material/dialog';
 import { MatSnackBarModule } from '@angular/material/snack-bar';
 import { MatSidenavModule } from '@angular/material/sidenav';
 import { MatTooltipModule } from '@angular/material/tooltip';
+import { MatDividerModule } from '@angular/material/divider';
+import { MatIconModule } from '@angular/material/icon';
+import { MatProgressBarModule } from '@angular/material/progress-bar';
 
 
 @NgModule({
@@ -31,6 +34,9 @@ import { MatTooltipModule } from '@angular/material/tooltip';
     MatSnackBarModule,
     MatSidenavModule,
     MatTooltipModule,
+    MatDividerModule,
+    MatIconModule,
+    MatProgressBarModule,
   ],
   providers: [AppService, CookieService, CookiesService],
   bootstrap: [AppComponent]

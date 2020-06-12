@@ -1,2 +1,10 @@
-<button mat-raised-button color="primary" matTooltip="PPC +2, Cost: 100" (click)="ppcBonus()">PPC Boost</button>
-<button mat-raised-button color="primary" matTooltip="PPS +1, Cost: 100" (click)="ppsBonus()">PPS Boost</button>
+<div *ngFor="let bonus of bonuses; last as last">
+    <div class="bonus">
+        <button mat-raised-button color="{{ bonus.color }}" matTooltip="{{ bonus.tooltip }}"
+            (click)="onClickMethod(bonus.method)">{{ bonus.buttonText }}</button>
+        <div>{{ getCostMethod(bonus.method) }}</div>
+    </div>
+    <mat-progress-bar *ngIf="bonus.method === 'devilDeal'" mode="determinate" value="{{ getDevilDealCharge() }}">
+    </mat-progress-bar>
+    <mat-divider *ngIf="!last"></mat-divider>
+</div>

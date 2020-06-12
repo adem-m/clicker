@@ -19,6 +19,9 @@ export class AppComponent {
         this.appService.score = this.cookieService.getScore();
         this.appService.pointsPerClick = this.cookieService.getPPC();
         this.appService.pointsPerSecond = this.cookieService.getPPS();
+        this.appService.ppcBoostTaken = this.cookieService.getPPCBoost();
+        this.appService.ppsBoostTaken = this.cookieService.getPPSBoost();
+        this.appService.devilDealCharge = this.cookieService.getDevilDealCharge();
         if (this.appService.pointsPerSecond > 0) {
             this.updateScore();
         }
@@ -54,6 +57,9 @@ export class AppComponent {
     }
     updateScore() {
         this.appService.score += this.appService.pointsPerClick;
+        if (this.appService.devilDealCharge < 100) {
+            this.appService.devilDealCharge += 0.5;
+        }
         this.save(this.appService.score);
         this.variablesUpdate();
         if (!this.gameStarted) {
@@ -69,6 +75,9 @@ export class AppComponent {
         this.cookieService.setScore(score);
         this.cookieService.setPPC(this.appService.pointsPerClick);
         this.cookieService.setPPS(this.appService.pointsPerSecond);
+        this.cookieService.setPPCBoost(this.appService.ppcBoostTaken);
+        this.cookieService.setPPSBoost(this.appService.ppsBoostTaken);
+        this.cookieService.setDevilDealCharge(this.appService.devilDealCharge);
     }
     openResetDialog() {
         this.dialog.open(ResetDialogComponent);

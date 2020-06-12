@@ -1,7 +1,12 @@
 <mat-drawer-container class="body" hasBackdrop="false">
     <mat-drawer mode="over" class="drawer" #drawer>
+        <div class="drawerHeader">
+            <span class="title">Bonus list</span>
+            <button mat-icon-button (click)="drawer.toggle()">
+                <mat-icon>close</mat-icon>
+            </button>
+        </div>
         <app-bonus-drawer></app-bonus-drawer>
-        <button mat-raised-button color="primary" (click)="drawer.toggle()">Close</button>
     </mat-drawer>
     <div>
         Points per click: {{ getPPC() }}
