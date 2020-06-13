@@ -1,7 +1,7 @@
 <mat-drawer-container class="body" hasBackdrop="false">
     <mat-drawer mode="over" class="drawer" #drawer>
         <div class="drawerHeader">
-            <span class="title">Bonus list</span>
+            <span class="title">Bonus</span>
             <button mat-icon-button (click)="drawer.toggle()">
                 <mat-icon>close</mat-icon>
             </button>
@@ -9,11 +9,11 @@
         <app-bonus-drawer></app-bonus-drawer>
     </mat-drawer>
     <div>
-        Points per click: {{ getPPC() }}
-        Points per second: {{ getPPS() }}
+        Points par clic: {{ getPPC() }}
+        Points par seconde: {{ getPPS() }}
     </div>
     <div>{{ getScore() }}</div>
     <img src="assets/img/1.png" height="300px" (click)="updateScore()"><br>
-    <button mat-raised-button color="primary" (click)="drawer.toggle()">Bonuses</button>
+    <button mat-raised-button color="primary" (click)="drawer.toggle()">Bonus</button>
     <button mat-raised-button color="warn" (click)="openResetDialog()">Reset</button>
 </mat-drawer-container>

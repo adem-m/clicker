@@ -15,6 +15,6 @@ export class ResetDialogComponent implements OnInit {
   }
   reset() {
     this.appService.reset();
-    this.snackBar.open('Your data has been sucessfully reset', 'Close', { duration: 3000 });
+    this.appService.snackDisplay('Your data has been sucessfully reset');
   }
 }

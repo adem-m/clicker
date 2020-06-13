@@ -35,19 +35,7 @@ export class AppComponent {
         }
     }
     getScore() {
-        const currentScore = this.appService.score.toString();
-        let stringBuilder = '';
-        for (let i = 0; i < currentScore.length; i++) {
-            stringBuilder += currentScore[currentScore.length - i - 1];
-            if (i % 3 === 2 && i !== currentScore.length - 1) {
-                stringBuilder += ',';
-            }
-        }
-        let newScore = '';
-        for (let i = 0; i < stringBuilder.length; i++) {
-            newScore += stringBuilder[stringBuilder.length - i - 1];
-        }
-        return newScore;
+        return this.appService.numberFormatter(this.appService.score);
     }
     getPPC() {
         return this.appService.pointsPerClick;

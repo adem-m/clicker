@@ -1,8 +1,9 @@
 <div *ngFor="let bonus of bonuses; last as last">
     <div class="bonus">
         <button mat-raised-button color="{{ bonus.color }}" matTooltip="{{ bonus.tooltip }}"
-            (click)="onClickMethod(bonus.method)">{{ bonus.buttonText }}</button>
-        <div>{{ getCostMethod(bonus.method) }}</div>
+            (click)="onClickMethod(bonus.method)"
+            disabled="{{ bonus.method === 'devilDeal' ? getDevilDealCharge() < 100 : getCostMethod(bonus.method) > getScore() }}">{{ bonus.buttonText }}</button>
+        <div>{{ numberFormatter(getCostMethod(bonus.method)) }}</div>
     </div>
     <mat-progress-bar *ngIf="bonus.method === 'devilDeal'" mode="determinate" value="{{ getDevilDealCharge() }}">
     </mat-progress-bar>

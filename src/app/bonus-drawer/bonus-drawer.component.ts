@@ -7,35 +7,53 @@ import { AppService } from '../services/app.service';
     styleUrls: ['./bonus-drawer.component.scss']
 })
 export class BonusDrawerComponent implements OnInit {
+    devilDealBonuses = [
+        'Ben Arfa qui signe pour 0€ ! Ish ish',
+        'Dolberg qui arrive de l\'AJAX !'
+    ];
+    devilDealMaluses = [
+        '6,5 millions pour Sneijder, ça pique...',
+        'Mdr t\'as acheté Moussa Wagué'
+    ];
     bonuses = [
         {
             color: 'primary',
-            tooltip: 'PPC +2',
+            tooltip: 'Points par clic +2',
             method: 'ppcBonus',
-            buttonText: 'PPC Bonus'
+            buttonText: 'Tir cadré',
+            unlock: 500,
         },
         {
             color: 'primary',
-            tooltip: 'PPS +1',
+            tooltip: 'Points par seconde +1',
             method: 'ppsBonus',
-            buttonText: 'PPS Bonus'
+            buttonText: 'La possession',
+            unlock: 1000,
         },
         {
             color: 'warn',
-            tooltip: '60% chance to double your stats, 40% chance to half your stats',
+            tooltip: '60%  de chance de doubler tes stats, 40% de chance de les diviser par deux',
             method: 'devilDeal',
-            buttonText: 'Devil Deal'
+            buttonText: 'Mercato',
+            unlock: 10000,
         },
         {
             color: 'primary',
-            tooltip: 'Youcef',
+            tooltip: 'PPS +1000 pour 10 à 15 secondes',
             method: 'atal',
-            buttonText: 'Atal'
+            buttonText: 'Atal',
+            unlock: 100000,
         },
     ];
     constructor(private appService: AppService) { }
 
     ngOnInit(): void {
+    }
+    numberFormatter(num: number) {
+        return this.appService.numberFormatter(num);
+    }
+    getScore() {
+        return this.appService.score;
     }
     onClickMethod(method: string) {
         switch (method) {
@@ -48,6 +66,9 @@ export class BonusDrawerComponent implements OnInit {
             case 'devilDeal':
                 this.devilDeal();
                 break;
+            case 'atal':
+                this.atalBonus();
+                break;
             default:
                 break;
         }
@@ -59,7 +80,9 @@ export class BonusDrawerComponent implements OnInit {
             case 'ppsBonus':
                 return this.getPPSBonusCost();
             case 'devilDeal':
-                return '80%';
+                return Math.floor(this.appService.score * 0.8);
+            case 'atal':
+                return 10000;
             default:
                 break;
         }
@@ -69,6 +92,7 @@ export class BonusDrawerComponent implements OnInit {
             this.appService.score -= this.getPPCBonusCost();
             this.appService.pointsPerClick += 2;
             this.appService.ppcBoostTaken++;
+            this.appService.snackDisplay('Eh c\'est le but !', 1000);
         }
     }
     ppsBonus() {
@@ -76,6 +100,7 @@ export class BonusDrawerComponent implements OnInit {
             this.appService.score -= this.getPPSBonusCost();
             this.appService.pointsPerSecond++;
             this.appService.ppsBoostTaken++;
+            this.appService.snackDisplay('La belle passe !', 1000);
         }
     }
     devilDeal() {
@@ -85,11 +110,22 @@ export class BonusDrawerComponent implements OnInit {
             if (Math.floor(Math.random() * 100) < 60) {
                 this.appService.pointsPerClick *= 2;
                 this.appService.pointsPerSecond *= 2;
+                this.appService.snackDisplay(this.devilDealBonuses[Math.floor(Math.random() * this.devilDealBonuses.length)]);
             } else {
                 this.appService.pointsPerClick = Math.floor(this.appService.pointsPerClick / 2);
                 this.appService.pointsPerSecond = Math.floor(this.appService.pointsPerSecond / 2);
+                this.appService.snackDisplay(this.devilDealMaluses[Math.floor(Math.random() * this.devilDealMaluses.length)]);
             }
         }
+    }
+    atalBonus() {
+        this.appService.pointsPerSecond += 1000;
+        setTimeout(() => {
+            this.appService.pointsPerSecond -= 1000;
+            if (this.appService.pointsPerSecond < 0) {
+                this.appService.pointsPerSecond = 0;
+            }
+        }, Math.floor(Math.random() * 5000) + 10000);
     }
     getPPCBonusCost() {
         return (this.appService.ppcBoostTaken * 500) + 500;
