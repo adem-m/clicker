@@ -1,11 +1,17 @@
 <div *ngFor="let bonus of bonuses; last as last">
-    <div class="bonus">
-        <button mat-raised-button color="{{ bonus.color }}" matTooltip="{{ bonus.tooltip }}"
-            (click)="onClickMethod(bonus.method)"
-            disabled="{{ bonus.method === 'devilDeal' ? getDevilDealCharge() < 100 : getCostMethod(bonus.method) > getScore() }}">{{ bonus.buttonText }}</button>
-        <div>{{ numberFormatter(getCostMethod(bonus.method)) }}</div>
+    <div class="bonus" *ngIf="getScore() > bonus.unlock">
+        <div class="button">
+            <button mat-raised-button color="{{ bonus.color }}" matTooltip="{{ bonus.tooltip }}"
+                (click)="onClickMethod(bonus.method)"
+                disabled="{{ bonus.cooldown ? getCooldown(bonus.method) < 100 : getCostMethod(bonus.method) > getScore() }}">
+                {{ bonus.buttonText }}</button>
+            <mat-progress-bar *ngIf="bonus.cooldown" mode="determinate" value="{{ getCooldown(bonus.method) }}">
+            </mat-progress-bar>
+        </div>
+        <div class="cost">{{ numberFormatter(getCostMethod(bonus.method)) }}</div>
     </div>
-    <mat-progress-bar *ngIf="bonus.method === 'devilDeal'" mode="determinate" value="{{ getDevilDealCharge() }}">
-    </mat-progress-bar>
+    <div class="locked" *ngIf="getScore() < bonus.unlock">
+        <mat-icon>lock</mat-icon>{{ numberFormatter(bonus.unlock) }}
+    </div>
     <mat-divider *ngIf="!last"></mat-divider>
 </div>

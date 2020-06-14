@@ -22,6 +22,7 @@ export class AppComponent {
         this.appService.ppcBoostTaken = this.cookieService.getPPCBoost();
         this.appService.ppsBoostTaken = this.cookieService.getPPSBoost();
         this.appService.devilDealCharge = this.cookieService.getDevilDealCharge();
+        this.appService.atalCharge = this.cookieService.getAtalCharge();
         if (this.appService.pointsPerSecond > 0) {
             this.updateScore();
         }
@@ -38,16 +39,15 @@ export class AppComponent {
         return this.appService.numberFormatter(this.appService.score);
     }
     getPPC() {
-        return this.appService.pointsPerClick;
+        return this.appService.numberFormatter(this.appService.pointsPerClick);
     }
     getPPS() {
-        return this.appService.pointsPerSecond;
+        return this.appService.numberFormatter(this.appService.pointsPerSecond);
     }
     updateScore() {
         this.appService.score += this.appService.pointsPerClick;
-        if (this.appService.devilDealCharge < 100) {
-            this.appService.devilDealCharge += 0.5;
-        }
+        this.devilDealChargeUp();
+        this.atalChargeUp();
         this.save(this.appService.score);
         this.variablesUpdate();
         if (!this.gameStarted) {
@@ -62,12 +62,23 @@ export class AppComponent {
     save(score: number) {
         this.cookieService.setScore(score);
         this.cookieService.setPPC(this.appService.pointsPerClick);
-        this.cookieService.setPPS(this.appService.pointsPerSecond);
+        this.cookieService.setPPS(this.appService.pointsPerSecond - 1);
         this.cookieService.setPPCBoost(this.appService.ppcBoostTaken);
         this.cookieService.setPPSBoost(this.appService.ppsBoostTaken);
         this.cookieService.setDevilDealCharge(this.appService.devilDealCharge);
+        this.cookieService.setAtalCharge(this.appService.atalCharge);
     }
     openResetDialog() {
         this.dialog.open(ResetDialogComponent);
+    }
+    devilDealChargeUp() {
+        if (this.appService.devilDealCharge < 100) {
+            this.appService.devilDealCharge += 0.5;
+        }
+    }
+    atalChargeUp() {
+        if (this.appService.atalCharge < 100) {
+            this.appService.atalCharge += 0.25;
+        }
     }
 }

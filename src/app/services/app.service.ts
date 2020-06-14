@@ -10,6 +10,7 @@ export class AppService {
     ppcBoostTaken = 0;
     ppsBoostTaken = 0;
     devilDealCharge = 0;
+    atalCharge = 0;
 
     constructor(private snackBar: MatSnackBar) {
 
@@ -21,6 +22,7 @@ export class AppService {
         this.ppcBoostTaken = 0;
         this.ppsBoostTaken = 0;
         this.devilDealCharge = 0;
+        this.atalCharge = 0;
     }
     numberFormatter(num: number) {
         const currentScore = num.toString();

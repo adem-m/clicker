@@ -2,9 +2,13 @@ button {
     margin: 8px;
 }
 .bonus {
-    display: flex;
-    justify-content: space-evenly;
+    display: grid;
+    grid-template-columns: 50% auto;
     align-items: center;
+}
+.locked {
+    font-size: 1.5em;
+    padding: 0.5em 0;
 }
 mat-progress-bar {
     margin: 0.5em auto;

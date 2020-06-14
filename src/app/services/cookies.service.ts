@@ -42,6 +42,12 @@ export class CookiesService {
         }
         return 0;
     }
+    getAtalCharge() {
+        if (this.cookieService.check('atalCharge')) {
+            return parseInt(this.cookieService.get('atalCharge'), 10);
+        }
+        return 0;
+    }
     setScore(score: number) {
         this.cookieService.set('score', score.toString(), 99999);
     }
@@ -58,6 +64,9 @@ export class CookiesService {
         this.cookieService.set('ppsBoost', ppsBoost.toString(), 99999);
     }
     setDevilDealCharge(devilDealCharge: number) {
-        this.cookieService.set('devilDealCharge', devilDealCharge.toString(), 99999);
+        this.cookieService.set('devilDealCharge', Math.floor(devilDealCharge).toString(), 99999);
+    }
+    setAtalCharge(atalCharge: number) {
+        this.cookieService.set('atalCharge', Math.floor(atalCharge).toString(), 99999);
     }
 }
