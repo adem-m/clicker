@@ -1,9 +1,58 @@
 .body {
-    background-color: rgb(136, 136, 136);
+    background-color: rgb(65, 65, 65);
+    color: white;
     text-align: center;
+    height: calc(100vh - 110px);
+}
+.game {
+    margin: 1em;
+}
+.resetButton {
+    text-align: right;
+}
+.score {
+    font-size: 2em;
+}
+.stats {
+    font-style: italic;
+}
+.image {
+    margin: 2em 0;
+    max-height: 250px;
+    animation: rotation 30s infinite linear;
+}
+.images {
+    display: flex;
+    align-items: center;
+    justify-content: center;
+    flex-wrap: wrap;
+}
+.juggle {
+    animation: juggling 1s infinite steps(2, jump-both);
+    margin: 2em;
+}
+@keyframes rotation {
+    from {
+        transform: rotate(0deg);
+    }
+    to {
+        transform: rotate(360deg);
+    }
+}
+@keyframes juggling {
+    from {
+        transform: rotate(-30deg);
+    }
+    to {
+        transform: rotate(30deg);
+    }
+}
+button {
+    margin: 8px;
 }
 .drawer {
-    width: 400px;
+    width: 50%;
+    max-width: 400px;
 }
 .drawerHeader {
     display: flex;
@@ -15,6 +64,25 @@
     font-size: 2em;
     font-weight: bold;
 }
-button {
-    margin: 8px;
+.footer {
+    background-color: rgb(48, 48, 48);
+    display: flex;
+    justify-content: space-between;
+    padding: 0 0.5em;
+    height: 56px;
+}
+.name {
+    color: white;
+    font-weight: 600;
+    margin: 0.5em;
+}
+@media screen and (max-width: 600px) {
+    .images {
+        flex-flow: column;
+    }
+    .firstImage {
+        position: absolute;
+        width: 0;
+        height: 0;
+    }
 }

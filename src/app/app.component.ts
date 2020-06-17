@@ -3,16 +3,31 @@ import { AppService } from './services/app.service';
 import { CookiesService } from './services/cookies.service';
 import { MatDialog } from '@angular/material/dialog';
 import { ResetDialogComponent } from './reset-dialog/reset-dialog.component';
+import { trigger, state, style, animate, transition, keyframes } from '@angular/animations';
 
 @Component({
     selector: 'app-root',
     templateUrl: './app.component.html',
-    styleUrls: ['./app.component.scss']
+    styleUrls: ['./app.component.scss'],
+    animations: [
+        trigger('animationTrigger', [
+            transition(':enter', [
+                style({ opacity: 0 }),
+                animate('700ms', keyframes([
+                    style({ opacity: 1 })
+                ])),
+            ]),
+            transition(':leave', [
+                animate('700ms', style({ opacity: 0 }))
+            ])
+        ]),
+    ]
 })
 export class AppComponent {
     gameStarted = false;
 
     constructor(private appService: AppService, private cookieService: CookiesService, public dialog: MatDialog) {
+        appService.bonusUnlockChecker();
         this.getCookies();
     }
     getCookies() {
@@ -23,6 +38,7 @@ export class AppComponent {
         this.appService.ppsBoostTaken = this.cookieService.getPPSBoost();
         this.appService.devilDealCharge = this.cookieService.getDevilDealCharge();
         this.appService.atalCharge = this.cookieService.getAtalCharge();
+        this.appService.bonusUnlocked = this.cookieService.getBonusUnlocked();
         if (this.appService.pointsPerSecond > 0) {
             this.updateScore();
         }
@@ -46,6 +62,7 @@ export class AppComponent {
     }
     updateScore() {
         this.appService.score += this.appService.pointsPerClick;
+        this.appService.bonusUnlockChecker();
         this.devilDealChargeUp();
         this.atalChargeUp();
         this.save(this.appService.score);
@@ -67,6 +84,7 @@ export class AppComponent {
         this.cookieService.setPPSBoost(this.appService.ppsBoostTaken);
         this.cookieService.setDevilDealCharge(this.appService.devilDealCharge);
         this.cookieService.setAtalCharge(this.appService.atalCharge);
+        this.cookieService.setBonusUnlocked(this.appService.bonusUnlocked);
     }
     openResetDialog() {
         this.dialog.open(ResetDialogComponent);
@@ -80,5 +98,11 @@ export class AppComponent {
         if (this.appService.atalCharge < 100) {
             this.appService.atalCharge += 0.25;
         }
+    }
+    getImageStatus() {
+        return this.appService.imageDisplayed;
+    }
+    getImageName() {
+        return this.appService.imageName;
     }
 }

@@ -15,6 +15,6 @@ export class ResetDialogComponent implements OnInit {
   }
   reset() {
     this.appService.reset();
-    this.appService.snackDisplay('Your data has been sucessfully reset');
+    this.appService.snackDisplay('Vos données ont bien été réinitialisées');
   }
 }

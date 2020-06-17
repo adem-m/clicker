@@ -1,5 +1,5 @@
-<div *ngFor="let bonus of bonuses; last as last">
-    <div class="bonus" *ngIf="getScore() > bonus.unlock">
+<div *ngFor="let bonus of getBonuses(); last as last; index as i">
+    <div @animationTrigger class="bonus" *ngIf="getBonusUnlocked() > i">
         <div class="button">
             <button mat-raised-button color="{{ bonus.color }}" matTooltip="{{ bonus.tooltip }}"
                 (click)="onClickMethod(bonus.method)"
@@ -10,8 +10,8 @@
         </div>
         <div class="cost">{{ numberFormatter(getCostMethod(bonus.method)) }}</div>
     </div>
-    <div class="locked" *ngIf="getScore() < bonus.unlock">
-        <mat-icon>lock</mat-icon>{{ numberFormatter(bonus.unlock) }}
+    <div class="locked" *ngIf="getBonusUnlocked() <= i">
+        <mat-icon>lock</mat-icon>{{ numberFormatter(bonus.unlockScore) }}
     </div>
     <mat-divider *ngIf="!last"></mat-divider>
 </div>

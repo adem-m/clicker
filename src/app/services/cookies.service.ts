@@ -48,6 +48,12 @@ export class CookiesService {
         }
         return 0;
     }
+    getBonusUnlocked() {
+        if (this.cookieService.check('bonusUnlocked')) {
+            return parseInt(this.cookieService.get('bonusUnlocked'), 10);
+        }
+        return 0;
+    }
     setScore(score: number) {
         this.cookieService.set('score', score.toString(), 99999);
     }
@@ -68,5 +74,8 @@ export class CookiesService {
     }
     setAtalCharge(atalCharge: number) {
         this.cookieService.set('atalCharge', Math.floor(atalCharge).toString(), 99999);
+    }
+    setBonusUnlocked(bonusUnlocked: number) {
+        this.cookieService.set('bonusUnlocked', Math.floor(bonusUnlocked).toString(), 99999);
     }
 }

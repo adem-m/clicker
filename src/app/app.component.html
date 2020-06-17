@@ -8,12 +8,23 @@
         </div>
         <app-bonus-drawer></app-bonus-drawer>
     </mat-drawer>
-    <div>
-        Points par clic: {{ getPPC() }}
-        Points par seconde: {{ getPPS() }}
+    <div class="game">
+        <div class="score">{{ getScore() }}</div>
+        <div class="stats">
+            Points par clic: {{ getPPC() }}<br>
+            Points par seconde: {{ getPPS() }}
+        </div>
+        <div class="images">
+            <img @animationTrigger src="{{ getImageName() }}" height="100vw" class="juggle firstImage" *ngIf="getImageStatus()">
+            <img src="assets/img/1.png" (click)="updateScore()" class="image">
+            <img @animationTrigger src="{{ getImageName() }}" height="100vw" class="juggle" *ngIf="getImageStatus()">
+        </div>
+        <button mat-stroked-button color="primary" (click)="drawer.toggle()">Voir les bonus</button>
     </div>
-    <div>{{ getScore() }}</div>
-    <img src="assets/img/1.png" height="300px" (click)="updateScore()"><br>
-    <button mat-raised-button color="primary" (click)="drawer.toggle()">Bonus</button>
-    <button mat-raised-button color="warn" (click)="openResetDialog()">Reset</button>
 </mat-drawer-container>
+<div class="footer">
+    <button mat-mini-fab color="warn" (click)="openResetDialog()">
+        <mat-icon>delete</mat-icon>
+    </button>
+    <span class="name">Adem MRIZAK</span>
+</div>

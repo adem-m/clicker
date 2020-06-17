@@ -14,3 +14,9 @@ mat-progress-bar {
     margin: 0.5em auto;
     width: 100px;
 }
+@media screen and (max-width: 800px) {
+    .bonus {
+        display: block;
+        margin: 0.5em 0;
+    }
+}

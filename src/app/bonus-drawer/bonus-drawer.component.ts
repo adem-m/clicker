@@ -1,66 +1,48 @@
 import { Component, OnInit } from '@angular/core';
 import { AppService } from '../services/app.service';
+import { trigger, state, style, animate, transition, keyframes } from '@angular/animations';
 
 @Component({
     selector: 'app-bonus-drawer',
     templateUrl: './bonus-drawer.component.html',
-    styleUrls: ['./bonus-drawer.component.scss']
+    styleUrls: ['./bonus-drawer.component.scss'],
+    animations: [
+        trigger('animationTrigger', [
+            transition(':enter', [
+                style({ opacity: 0 }),
+                animate('1000ms', keyframes([
+                    style({ opacity: 1 })
+                ])),
+            ]),
+            transition(':leave', [
+                animate('1000ms', style({ opacity: 0 }))
+            ])
+        ]),
+    ]
 })
 export class BonusDrawerComponent implements OnInit {
     devilDealBonuses = [
-        'Ben Arfa qui signe pour 0€ ! Ish ish',
-        'Dolberg débarque de l\'AJAX pour tout niquer !',
-        'Le grand Youcef sur la Côte d\'Azur pour 3 millions !',
-        'Seri qui part pour 30M, ça fait un bénef de 28M. Propre',
-        'Boudaoui 4 millions, futur crack !',
-        'Benitez, meilleur gardien du monde, gratuit',
-        'Balotelli cet OURS, gratos bien sûr',
-        'Acheté 2 millions, vendu 21. Oui c\'est Dalbert'
+        ['Ben Arfa qui signe pour 0€ ! Ish ish', 'benarfacome'],
+        ['Dolberg débarque de l\'AJAX pour tout niquer !', 'dolberg'],
+        ['Le grand Youcef sur la Côte d\'Azur pour 3 millions !', 'atal'],
+        ['Seri qui part pour 30M, ça fait un bénef de 28M. Propre', 'seri'],
+        ['Boudaoui 4 millions, futur crack !', 'boudaoui'],
+        ['Benitez, meilleur gardien du monde, gratuit', 'benitez'],
+        ['Balotelli cet OURS, gratos bien sûr', 'balotelli'],
+        ['Acheté 2 millions, vendu 21. Oui c\'est Dalbert', 'dalbert']
     ];
     devilDealMaluses = [
-        '6,5 millions pour Sneijder, quelle arnaque',
-        'Mdr t\'as acheté Moussa Wagué',
-        'Aiiie, Saint-Maximin qui fait ses valises',
-        'Maolida pour le prix de 3 Atal, cette douille mdr',
-        'Lamine Diaby recruté, surveillez vos poches',
-        'Départ de Pléa le sang, ça fait mal',
-        'Ben Arfa monte à la capitale, tu perds ton 9'
+        ['6,5 millions pour Sneijder, quelle arnaque', 'sneijder'],
+        ['Mdr t\'as acheté Moussa Wagué', 'wague'],
+        ['Aiiie, Saint-Maximin qui fait ses valises', 'stmaximin'],
+        ['Maolida pour le prix de 3 Atal, cette douille mdr', 'maolida'],
+        ['Lamine Diaby recruté, surveillez vos poches', 'diaby'],
+        ['Départ de Pléa le sang, ça fait mal', 'plea'],
+        ['Ben Arfa monte à la capitale, tu perds ton 9', 'benarfagone']
     ];
-    bonuses = [
-        {
-            color: 'primary',
-            tooltip: 'Points par clic +2',
-            method: 'ppcBonus',
-            buttonText: 'Tir cadré',
-            unlock: 500,
-            cooldown: false,
-        },
-        {
-            color: 'primary',
-            tooltip: 'Points par seconde +1',
-            method: 'ppsBonus',
-            buttonText: 'La possession',
-            unlock: 1000,
-            cooldown: false,
-        },
-        {
-            color: 'warn',
-            tooltip: '70%  de chance de doubler tes stats, 29% de chance de les diviser par deux, 1% de chance de les multiplier par 12',
-            method: 'devilDeal',
-            buttonText: 'Mercato',
-            unlock: 10000,
-            cooldown: true,
-        },
-        {
-            color: 'primary',
-            tooltip: '1% de ton score par seconde pendant 8 à 16 secondes',
-            method: 'atal',
-            buttonText: 'Atal',
-            unlock: 100000,
-            cooldown: true,
-        },
-    ];
-    constructor(private appService: AppService) { }
+
+    constructor(private appService: AppService) {
+    }
 
     ngOnInit(): void {
     }
@@ -69,6 +51,12 @@ export class BonusDrawerComponent implements OnInit {
     }
     getScore() {
         return this.appService.score;
+    }
+    getBonuses() {
+        return this.appService.bonuses;
+    }
+    getBonusUnlocked() {
+        return this.appService.bonusUnlocked;
     }
     onClickMethod(method: string) {
         switch (method) {
@@ -119,37 +107,44 @@ export class BonusDrawerComponent implements OnInit {
         this.appService.score -= this.getDevilDealCost();
         const rand = Math.floor(Math.random() * 100);
         if (rand < 70) {
+            const chance = Math.floor(Math.random() * this.devilDealBonuses.length);
             this.appService.pointsPerClick *= 2;
             this.appService.pointsPerSecond *= 2;
-            this.appService.snackDisplay(this.devilDealBonuses[Math.floor(Math.random() * this.devilDealBonuses.length)], 4000);
+            this.appService.snackDisplay(this.devilDealBonuses[chance][0], 4000);
+            this.appService.displayImage(this.devilDealBonuses[chance][1], 5000);
         } else if (rand === 99) {
             this.appService.pointsPerClick *= 12;
             this.appService.pointsPerSecond *= 12;
             this.appService.snackDisplay('PARDON ?! RRRRRRONALDO A L\'OGCNICE ?!');
+            this.appService.displayImage('ronaldo', 10000);
         } else {
+            const chance = Math.floor(Math.random() * this.devilDealMaluses.length);
             this.appService.pointsPerClick = Math.floor(this.appService.pointsPerClick / 2);
             this.appService.pointsPerSecond = Math.floor(this.appService.pointsPerSecond / 2);
-            this.appService.snackDisplay(this.devilDealMaluses[Math.floor(Math.random() * this.devilDealMaluses.length)], 4000);
+            this.appService.snackDisplay(this.devilDealMaluses[chance][0], 4000);
+            this.appService.displayImage(this.devilDealMaluses[chance][1], 5000);
         }
     }
     atalBonus() {
+        const delay = Math.floor(Math.random() * 8000) + 8000;
+        const ppsBonus = Math.floor(this.appService.score * 0.01);
         this.appService.atalCharge = 0;
         this.appService.score -= this.getAtalCost();
-        const ppsBonus = Math.floor(this.appService.score * 0.01);
         this.appService.pointsPerSecond += ppsBonus;
+        this.appService.snackDisplay('Ca va dribbler sale !');
+        this.appService.displayImage('atal', delay);
         setTimeout(() => {
             this.appService.pointsPerSecond -= ppsBonus;
             if (this.appService.pointsPerSecond < 0) {
                 this.appService.pointsPerSecond = 0;
             }
-        }, Math.floor(Math.random() * 8000) + 8000);
-        this.appService.snackDisplay('Ca va dribbler sale !');
+        }, delay);
     }
     getPPCBonusCost() {
-        return (this.appService.ppcBoostTaken * 200) + 500;
+        return (this.appService.ppcBoostTaken * 150) + 300;
     }
     getPPSBonusCost() {
-        return (this.appService.ppsBoostTaken * 250) + 1000;
+        return (this.appService.ppsBoostTaken * 200) + 1000;
     }
     getCooldown(method: string) {
         switch (method) {
