@@ -110,10 +110,10 @@ export class AppComponent {
         this.dialog.open(NewGameDialogComponent);
     }
     devilDealChargeUp() {
-        // if (this.appService.devilDealCharge < 100) {
-        //     this.appService.devilDealCharge += 0.5;
-        // }
-        this.appService.devilDealCharge = 100;
+        if (this.appService.devilDealCharge < 100) {
+            this.appService.devilDealCharge += 0.5;
+        }
+        // this.appService.devilDealCharge = 100;
     }
     atalChargeUp() {
         if (this.appService.atalCharge < 100) {

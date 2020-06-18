@@ -48,7 +48,7 @@ export class AppService {
         },
         {
             color: 'accent',
-            tooltip: '1% de ton score par seconde pendant 8 à 16 secondes',
+            tooltip: 'Pendant 8 à 16 secondes, tu gagnes 1% de ton score par seconde',
             method: 'atal',
             buttonText: 'Atal',
             unlockScore: 200000,

@@ -11,8 +11,8 @@
     <div class="game">
         <div class="score">{{ getScore() }}</div>
         <div class="stats">
-            Points par clic: {{ getPPC() }}<br>
-            Points par seconde: {{ getPPS() }}
+            Points par clic: <span id="ppc">{{ getPPC() }}</span><br>
+            Points par seconde: <span id="pps">{{ getPPS() }}</span>
         </div>
         <div class="images">
             <img @animationTrigger src="{{ getImageName() }}" height="150px" class="juggle firstImage"

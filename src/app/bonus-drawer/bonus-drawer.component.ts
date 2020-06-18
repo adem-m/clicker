@@ -96,14 +96,17 @@ export class BonusDrawerComponent implements OnInit {
         this.appService.pointsPerClick += 2;
         this.appService.ppcBoostTaken++;
         this.appService.snackDisplay('Eh c\'est le but !', 1000);
+        this.changeBonusColor('green', 1000, 'ppc');
     }
     ppsBonus() {
         this.appService.score -= this.getPPSBonusCost();
         this.appService.pointsPerSecond++;
         this.appService.ppsBoostTaken++;
         this.appService.snackDisplay('La belle passe !', 1000);
+        this.changeBonusColor('green', 1000, 'pps');
     }
     devilDeal() {
+        const delay = 5000;
         this.appService.devilDealCharge = 0;
         this.appService.score -= this.getDevilDealCost();
         const rand = Math.floor(Math.random() * 100);
@@ -112,21 +115,39 @@ export class BonusDrawerComponent implements OnInit {
             this.appService.pointsPerClick *= 2;
             this.appService.pointsPerSecond *= 2;
             this.appService.snackDisplay(this.devilDealBonuses[chance][0], 4000);
-            this.appService.displayImage(this.devilDealBonuses[chance][1], 5000);
+            this.appService.displayImage(this.devilDealBonuses[chance][1], delay);
+            this.changeBonusColor('green', delay);
         } else if (rand === 99) {
             this.appService.pointsPerClick *= 12;
             this.appService.pointsPerSecond *= 12;
             this.appService.snackDisplay('PARDON ?! RRRRRRONALDO A L\'OGCNICE ?!');
             this.appService.displayImage('ronaldo', 10000);
+            this.changeBonusColor('yellow', 10000);
         } else {
             const chance = Math.floor(Math.random() * this.devilDealMaluses.length);
             this.appService.pointsPerClick = Math.floor(this.appService.pointsPerClick / 2);
             this.appService.pointsPerSecond = Math.floor(this.appService.pointsPerSecond / 2);
             this.appService.snackDisplay(this.devilDealMaluses[chance][0], 4000);
-            this.appService.displayImage(this.devilDealMaluses[chance][1], 5000);
+            this.appService.displayImage(this.devilDealMaluses[chance][1], delay);
+            this.changeBonusColor('red', delay);
         }
         if (this.appService.mobile) {
             this.appComponent.toggleDrawer();
+        }
+    }
+    changeBonusColor(color: string, delay: number, bonusName = 'both') {
+        if (bonusName === 'both') {
+            document.getElementById('ppc').style.color = color;
+            document.getElementById('pps').style.color = color;
+            setTimeout(() => {
+                document.getElementById('ppc').style.color = 'white';
+                document.getElementById('pps').style.color = 'white';
+            }, delay);
+        } else {
+            document.getElementById(bonusName).style.color = color;
+            setTimeout(() => {
+                document.getElementById(bonusName).style.color = 'white';
+            }, delay);
         }
     }
     atalBonus() {
@@ -137,6 +158,7 @@ export class BonusDrawerComponent implements OnInit {
         this.appService.pointsPerSecond += ppsBonus;
         this.appService.snackDisplay('Ca va dribbler sale !');
         this.appService.displayImage('atal', delay);
+        this.changeBonusColor('blue', delay, 'pps');
         setTimeout(() => {
             this.appService.pointsPerSecond -= ppsBonus;
             if (this.appService.pointsPerSecond < 0) {
