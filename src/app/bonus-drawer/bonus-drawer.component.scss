@@ -5,6 +5,7 @@ button {
     display: grid;
     grid-template-columns: 50% auto;
     align-items: center;
+    padding: 4px 0;
 }
 .locked {
     font-size: 1.5em;

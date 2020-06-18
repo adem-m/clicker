@@ -15,10 +15,10 @@
             Points par seconde: {{ getPPS() }}
         </div>
         <div class="images">
-            <img @animationTrigger src="{{ getImageName() }}" height="100vw" class="juggle firstImage"
+            <img @animationTrigger src="{{ getImageName() }}" height="150px" class="juggle firstImage"
                 *ngIf="getImageStatus()">
             <img src="assets/img/1.png" (click)="updateScore()" class="image">
-            <img @animationTrigger src="{{ getImageName() }}" height="100vw" class="juggle" *ngIf="getImageStatus()">
+            <img @animationTrigger src="{{ getImageName() }}" height="150px" class="juggle" *ngIf="getImageStatus()">
         </div>
         <button mat-stroked-button id="bonusButton" color="primary" (click)="toggleDrawer()">Voir les bonus</button>
     </div>
