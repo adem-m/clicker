@@ -15,7 +15,8 @@
             Points par seconde: {{ getPPS() }}
         </div>
         <div class="images">
-            <img @animationTrigger src="{{ getImageName() }}" height="100vw" class="juggle firstImage" *ngIf="getImageStatus()">
+            <img @animationTrigger src="{{ getImageName() }}" height="100vw" class="juggle firstImage"
+                *ngIf="getImageStatus()">
             <img src="assets/img/1.png" (click)="updateScore()" class="image">
             <img @animationTrigger src="{{ getImageName() }}" height="100vw" class="juggle" *ngIf="getImageStatus()">
         </div>
@@ -23,8 +24,9 @@
     </div>
 </mat-drawer-container>
 <div class="footer">
-    <button mat-mini-fab color="warn" (click)="openResetDialog()">
-        <mat-icon>delete</mat-icon>
-    </button>
+    <button mat-icon-button [matMenuTriggerFor]="menu" style="color: white;"><mat-icon>more_vert</mat-icon></button>
+    <mat-menu #menu="matMenu">
+        <button mat-menu-item (click)="openResetDialog()" style="margin: 0;">Reset</button>
+    </mat-menu>
     <span class="name">Adem MRIZAK</span>
 </div>

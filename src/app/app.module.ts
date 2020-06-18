@@ -8,6 +8,8 @@ import { AppRoutingModule } from './app-routing.module';
 import { AppComponent } from './app.component';
 import { ResetDialogComponent } from './reset-dialog/reset-dialog.component';
 import { BonusDrawerComponent } from './bonus-drawer/bonus-drawer.component';
+import { NewGameDialogComponent } from './new-game-dialog/new-game-dialog.component';
+import { BonusDialogComponent } from './bonus-dialog/bonus-dialog.component';
 import { BrowserAnimationsModule } from '@angular/platform-browser/animations';
 import { MatButtonModule } from '@angular/material/button';
 import { MatDialogModule } from '@angular/material/dialog';
@@ -17,8 +19,7 @@ import { MatTooltipModule } from '@angular/material/tooltip';
 import { MatDividerModule } from '@angular/material/divider';
 import { MatIconModule } from '@angular/material/icon';
 import { MatProgressBarModule } from '@angular/material/progress-bar';
-import { NewGameDialogComponent } from './new-game-dialog/new-game-dialog.component';
-import { BonusDialogComponent } from './bonus-dialog/bonus-dialog.component';
+import {MatMenuModule} from '@angular/material/menu';
 
 
 @NgModule({
@@ -41,6 +42,7 @@ import { BonusDialogComponent } from './bonus-dialog/bonus-dialog.component';
     MatDividerModule,
     MatIconModule,
     MatProgressBarModule,
+    MatMenuModule,
   ],
   providers: [AppService, CookieService, CookiesService],
   bootstrap: [AppComponent]
