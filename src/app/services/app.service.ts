@@ -14,10 +14,13 @@ export class AppService {
     imageName = 'ronaldo';
     imageDisplayed = false;
     bonusUnlocked = 0;
+    mobile = false;
+    newGame = true;
+    firstDrawer = true;
 
     bonuses = [
         {
-            color: 'primary',
+            color: 'basic',
             tooltip: 'Points par clic +2',
             method: 'ppcBonus',
             buttonText: 'Tir cadré',
@@ -44,7 +47,7 @@ export class AppService {
             cooldown: true,
         },
         {
-            color: 'primary',
+            color: 'accent',
             tooltip: '1% de ton score par seconde pendant 8 à 16 secondes',
             method: 'atal',
             buttonText: 'Atal',
@@ -55,6 +58,9 @@ export class AppService {
     ];
 
     constructor(private snackBar: MatSnackBar) {
+        if (window.screen.width < 700) {
+            this.mobile = true;
+        }
     }
     reset() {
         this.score = 0;
@@ -65,6 +71,8 @@ export class AppService {
         this.devilDealCharge = 0;
         this.atalCharge = 0;
         this.bonusUnlocked = 0;
+        this.newGame = true;
+        this.firstDrawer = true;
         this.bonuses.forEach(bonus => {
             bonus.unlocked = false;
         });
@@ -93,7 +101,7 @@ export class AppService {
             this.bonuses.forEach(bonus => {
                 if (bonus.unlocked) {
                     count++;
-                } else if (bonus.unlockScore < this.score) {
+                } else if (bonus.unlockScore <= this.score) {
                     bonus.unlocked = true;
                     count++;
                 }
@@ -104,10 +112,14 @@ export class AppService {
         }
     }
     displayImage(playerName: string, time: number) {
+        document.getElementById('bonusButton').style.display = 'none';
         this.imageName = 'assets/img/' + playerName + '.png';
         this.imageDisplayed = true;
         setTimeout(() => {
             this.imageDisplayed = false;
+            setTimeout(() => {
+                document.getElementById('bonusButton').style.display = 'initial';
+            }, 800);
         }, time);
     }
 }

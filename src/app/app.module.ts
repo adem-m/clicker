@@ -17,13 +17,17 @@ import { MatTooltipModule } from '@angular/material/tooltip';
 import { MatDividerModule } from '@angular/material/divider';
 import { MatIconModule } from '@angular/material/icon';
 import { MatProgressBarModule } from '@angular/material/progress-bar';
+import { NewGameDialogComponent } from './new-game-dialog/new-game-dialog.component';
+import { BonusDialogComponent } from './bonus-dialog/bonus-dialog.component';
 
 
 @NgModule({
   declarations: [
     AppComponent,
     ResetDialogComponent,
-    BonusDrawerComponent
+    BonusDrawerComponent,
+    NewGameDialogComponent,
+    BonusDialogComponent
   ],
   imports: [
     BrowserModule,

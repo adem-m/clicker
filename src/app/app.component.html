@@ -2,7 +2,7 @@
     <mat-drawer mode="over" class="drawer" #drawer>
         <div class="drawerHeader">
             <span class="title">Bonus</span>
-            <button mat-icon-button (click)="drawer.toggle()">
+            <button mat-icon-button (click)="toggleDrawer()">
                 <mat-icon>close</mat-icon>
             </button>
         </div>
@@ -19,7 +19,7 @@
             <img src="assets/img/1.png" (click)="updateScore()" class="image">
             <img @animationTrigger src="{{ getImageName() }}" height="100vw" class="juggle" *ngIf="getImageStatus()">
         </div>
-        <button mat-stroked-button color="primary" (click)="drawer.toggle()">Voir les bonus</button>
+        <button mat-stroked-button id="bonusButton" color="primary" (click)="toggleDrawer()">Voir les bonus</button>
     </div>
 </mat-drawer-container>
 <div class="footer">

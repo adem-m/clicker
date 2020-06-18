@@ -19,7 +19,7 @@
 .image {
     margin: 2em 0;
     max-height: 250px;
-    animation: rotation 30s infinite linear;
+    animation: rotation 60s infinite linear;
 }
 .images {
     display: flex;
@@ -53,6 +53,8 @@ button {
 .drawer {
     width: 50%;
     max-width: 400px;
+    background-color: #555555;
+    color: white;
 }
 .drawerHeader {
     display: flex;

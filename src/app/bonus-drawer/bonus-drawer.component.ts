@@ -1,6 +1,7 @@
 import { Component, OnInit } from '@angular/core';
 import { AppService } from '../services/app.service';
 import { trigger, state, style, animate, transition, keyframes } from '@angular/animations';
+import { AppComponent } from '../app.component';
 
 @Component({
     selector: 'app-bonus-drawer',
@@ -41,7 +42,7 @@ export class BonusDrawerComponent implements OnInit {
         ['Ben Arfa monte à la capitale, tu perds ton 9', 'benarfagone']
     ];
 
-    constructor(private appService: AppService) {
+    constructor(private appService: AppService, private appComponent: AppComponent) {
     }
 
     ngOnInit(): void {
@@ -123,6 +124,9 @@ export class BonusDrawerComponent implements OnInit {
             this.appService.pointsPerSecond = Math.floor(this.appService.pointsPerSecond / 2);
             this.appService.snackDisplay(this.devilDealMaluses[chance][0], 4000);
             this.appService.displayImage(this.devilDealMaluses[chance][1], 5000);
+        }
+        if (this.appService.mobile) {
+            this.appComponent.toggleDrawer();
         }
     }
     atalBonus() {

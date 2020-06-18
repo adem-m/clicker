@@ -54,6 +54,18 @@ export class CookiesService {
         }
         return 0;
     }
+    getNewGame() {
+        if (this.cookieService.check('newGame')) {
+            return parseInt(this.cookieService.get('newGame'), 10);
+        }
+        return 1;
+    }
+    getFirstDrawer() {
+        if (this.cookieService.check('firstDrawer')) {
+            return parseInt(this.cookieService.get('firstDrawer'), 10);
+        }
+        return 1;
+    }
     setScore(score: number) {
         this.cookieService.set('score', score.toString(), 99999);
     }
@@ -77,5 +89,15 @@ export class CookiesService {
     }
     setBonusUnlocked(bonusUnlocked: number) {
         this.cookieService.set('bonusUnlocked', Math.floor(bonusUnlocked).toString(), 99999);
+    }
+    setNewGame(newGame: boolean) {
+        if (!newGame) {
+            this.cookieService.set('newGame', '0', 99999);
+        }
+    }
+    setFirstDrawer(firstDrawer: boolean) {
+        if (!firstDrawer) {
+            this.cookieService.set('firstDrawer', '0', 99999);
+        }
     }
 }

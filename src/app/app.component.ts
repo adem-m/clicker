@@ -1,9 +1,12 @@
-import { Component } from '@angular/core';
+import { Component, ViewChild } from '@angular/core';
 import { AppService } from './services/app.service';
 import { CookiesService } from './services/cookies.service';
 import { MatDialog } from '@angular/material/dialog';
 import { ResetDialogComponent } from './reset-dialog/reset-dialog.component';
+import { NewGameDialogComponent } from './new-game-dialog/new-game-dialog.component';
+import { BonusDialogComponent } from './bonus-dialog/bonus-dialog.component';
 import { trigger, state, style, animate, transition, keyframes } from '@angular/animations';
+import { MatSidenav } from '@angular/material/sidenav';
 
 @Component({
     selector: 'app-root',
@@ -25,10 +28,14 @@ import { trigger, state, style, animate, transition, keyframes } from '@angular/
 })
 export class AppComponent {
     gameStarted = false;
+    @ViewChild('drawer') drawer: MatSidenav;
 
     constructor(private appService: AppService, private cookieService: CookiesService, public dialog: MatDialog) {
         appService.bonusUnlockChecker();
         this.getCookies();
+        if (appService.newGame) {
+            this.openNewGameDialog();
+        }
     }
     getCookies() {
         this.appService.score = this.cookieService.getScore();
@@ -39,6 +46,12 @@ export class AppComponent {
         this.appService.devilDealCharge = this.cookieService.getDevilDealCharge();
         this.appService.atalCharge = this.cookieService.getAtalCharge();
         this.appService.bonusUnlocked = this.cookieService.getBonusUnlocked();
+        if (this.cookieService.getNewGame() === 0) {
+            this.appService.newGame = false;
+        }
+        if (this.cookieService.getFirstDrawer() === 0) {
+            this.appService.firstDrawer = false;
+        }
         if (this.appService.pointsPerSecond > 0) {
             this.updateScore();
         }
@@ -61,6 +74,7 @@ export class AppComponent {
         return this.appService.numberFormatter(this.appService.pointsPerSecond);
     }
     updateScore() {
+        this.appService.newGame = false;
         this.appService.score += this.appService.pointsPerClick;
         this.appService.bonusUnlockChecker();
         this.devilDealChargeUp();
@@ -72,6 +86,7 @@ export class AppComponent {
             this.appService.pointsPerSecond++;
             setInterval(() => {
                 this.appService.score += this.appService.pointsPerSecond;
+                this.appService.bonusUnlockChecker();
                 this.save(this.appService.score);
             }, 1000);
         }
@@ -85,14 +100,20 @@ export class AppComponent {
         this.cookieService.setDevilDealCharge(this.appService.devilDealCharge);
         this.cookieService.setAtalCharge(this.appService.atalCharge);
         this.cookieService.setBonusUnlocked(this.appService.bonusUnlocked);
+        this.cookieService.setNewGame(this.appService.newGame);
+        this.cookieService.setFirstDrawer(this.appService.firstDrawer);
     }
     openResetDialog() {
         this.dialog.open(ResetDialogComponent);
     }
+    openNewGameDialog() {
+        this.dialog.open(NewGameDialogComponent);
+    }
     devilDealChargeUp() {
-        if (this.appService.devilDealCharge < 100) {
-            this.appService.devilDealCharge += 0.5;
-        }
+        // if (this.appService.devilDealCharge < 100) {
+        //     this.appService.devilDealCharge += 0.5;
+        // }
+        this.appService.devilDealCharge = 100;
     }
     atalChargeUp() {
         if (this.appService.atalCharge < 100) {
@@ -104,5 +125,12 @@ export class AppComponent {
     }
     getImageName() {
         return this.appService.imageName;
+    }
+    toggleDrawer() {
+        this.drawer.toggle();
+        if (this.appService.firstDrawer) {
+            this.appService.firstDrawer = false;
+            this.dialog.open(BonusDialogComponent);
+        }
     }
 }
