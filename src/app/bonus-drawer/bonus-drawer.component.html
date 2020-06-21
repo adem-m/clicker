@@ -3,7 +3,8 @@
         <div class="button">
             <button mat-raised-button color="{{ bonus.color }}" matTooltip="{{ bonus.tooltip }}"
                 (click)="onClickMethod(bonus.method)"
-                disabled="{{ bonus.cooldown ? getCooldown(bonus.method) < 100 : getCostMethod(bonus.method) > getScore() }}">
+                disabled="{{ bonus.cooldown ? getCooldown(bonus.method) < 100 || getBonusActive()
+                    : getCostMethod(bonus.method) > getScore() || getBonusActive() }}">
                 {{ bonus.buttonText }}</button>
             <mat-progress-bar *ngIf="bonus.cooldown" mode="determinate" value="{{ getCooldown(bonus.method) }}">
             </mat-progress-bar>

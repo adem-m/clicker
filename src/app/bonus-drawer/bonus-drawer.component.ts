@@ -96,14 +96,14 @@ export class BonusDrawerComponent implements OnInit {
         this.appService.pointsPerClick += 2;
         this.appService.ppcBoostTaken++;
         this.appService.snackDisplay('Eh c\'est le but !', 1000);
-        this.changeBonusColor('green', 1000, 'ppc');
+        this.appService.changeStatColor('green', 1000, 'ppc');
     }
     ppsBonus() {
         this.appService.score -= this.getPPSBonusCost();
-        this.appService.pointsPerSecond++;
+        this.appService.pointsPerSecond += 5;
         this.appService.ppsBoostTaken++;
         this.appService.snackDisplay('La belle passe !', 1000);
-        this.changeBonusColor('green', 1000, 'pps');
+        this.appService.changeStatColor('green', 1000, 'pps');
     }
     devilDeal() {
         const delay = 5000;
@@ -116,41 +116,25 @@ export class BonusDrawerComponent implements OnInit {
             this.appService.pointsPerSecond *= 2;
             this.appService.snackDisplay(this.devilDealBonuses[chance][0], 4000);
             this.appService.displayImage(this.devilDealBonuses[chance][1], delay);
-            this.changeBonusColor('green', delay);
+            this.appService.changeStatColor('green', delay);
         } else if (rand === 99) {
             this.appService.pointsPerClick *= 12;
             this.appService.pointsPerSecond *= 12;
             this.appService.snackDisplay('PARDON ?! RRRRRRONALDO A L\'OGCNICE ?!');
             this.appService.displayImage('ronaldo', 10000);
-            this.changeBonusColor('yellow', 10000);
+            this.appService.changeStatColor('yellow', 10000);
         } else {
             const chance = Math.floor(Math.random() * this.devilDealMaluses.length);
             this.appService.pointsPerClick = Math.floor(this.appService.pointsPerClick / 2);
             this.appService.pointsPerSecond = Math.floor(this.appService.pointsPerSecond / 2);
             this.appService.snackDisplay(this.devilDealMaluses[chance][0], 4000);
             this.appService.displayImage(this.devilDealMaluses[chance][1], delay);
-            this.changeBonusColor('red', delay);
+            this.appService.changeStatColor('red', delay);
         }
-        if (this.appService.mobile) {
-            this.appComponent.toggleDrawer();
-        }
-    }
-    changeBonusColor(color: string, delay: number, bonusName = 'both') {
-        if (bonusName === 'both') {
-            document.getElementById('ppc').style.color = color;
-            document.getElementById('pps').style.color = color;
-            setTimeout(() => {
-                document.getElementById('ppc').style.color = 'white';
-                document.getElementById('pps').style.color = 'white';
-            }, delay);
-        } else {
-            document.getElementById(bonusName).style.color = color;
-            setTimeout(() => {
-                document.getElementById(bonusName).style.color = 'white';
-            }, delay);
-        }
+        this.appComponent.toggleDrawer();
     }
     atalBonus() {
+        this.appService.bonusActive = true;
         const delay = Math.floor(Math.random() * 8000) + 8000;
         const ppsBonus = Math.floor(this.appService.score * 0.01);
         this.appService.atalCharge = 0;
@@ -158,9 +142,10 @@ export class BonusDrawerComponent implements OnInit {
         this.appService.pointsPerSecond += ppsBonus;
         this.appService.snackDisplay('Ca va dribbler sale !');
         this.appService.displayImage('atal', delay);
-        this.changeBonusColor('blue', delay, 'pps');
+        this.appService.changeStatColor('blue', delay, 'pps');
         setTimeout(() => {
             this.appService.pointsPerSecond -= ppsBonus;
+            this.appService.bonusActive = false;
             if (this.appService.pointsPerSecond < 0) {
                 this.appService.pointsPerSecond = 0;
             }
@@ -193,5 +178,8 @@ export class BonusDrawerComponent implements OnInit {
     }
     getAtalCost() {
         return Math.floor(this.appService.score * 0.1);
+    }
+    getBonusActive() {
+        return this.appService.bonusActive;
     }
 }

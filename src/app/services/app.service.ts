@@ -17,6 +17,7 @@ export class AppService {
     mobile = false;
     newGame = true;
     firstDrawer = true;
+    bonusActive = false;
 
     bonuses = [
         {
@@ -30,7 +31,7 @@ export class AppService {
         },
         {
             color: 'primary',
-            tooltip: 'Points par seconde +1',
+            tooltip: 'Points par seconde +5',
             method: 'ppsBonus',
             buttonText: 'La possession',
             unlockScore: 1000,
@@ -78,6 +79,11 @@ export class AppService {
         });
     }
     numberFormatter(num: number) {
+        let neg = '';
+        if (num < 0) {
+            num *= -1;
+            neg = '-';
+        }
         const currentScore = num.toString();
         let stringBuilder = '';
         for (let i = 0; i < currentScore.length; i++) {
@@ -90,7 +96,7 @@ export class AppService {
         for (let i = 0; i < stringBuilder.length; i++) {
             newScore += stringBuilder[stringBuilder.length - i - 1];
         }
-        return newScore;
+        return neg + newScore;
     }
     snackDisplay(content: string, time: number = 3000) {
         this.snackBar.open(content, 'Fermer', { duration: time });
@@ -121,5 +127,29 @@ export class AppService {
                 document.getElementById('bonusButton').style.display = 'initial';
             }, 800);
         }, time);
+    }
+    changeStatColor(color: string, delay: number, statName = 'both') {
+        if (statName === 'both') {
+            document.getElementById('ppc').style.color = color;
+            document.getElementById('pps').style.color = color;
+            setTimeout(() => {
+                document.getElementById('ppc').style.color = 'white';
+                document.getElementById('pps').style.color = 'white';
+            }, delay);
+        } else {
+            document.getElementById(statName).style.color = color;
+            setTimeout(() => {
+                document.getElementById(statName).style.color = 'white';
+            }, delay);
+        }
+    }
+    changeBackgroundColor(color: string, delay: number) {
+        const background = document.getElementById('body');
+        const initialColor = background.style.backgroundColor;
+
+        background.style.backgroundColor = color;
+        setTimeout(() => {
+            background.style.backgroundColor = initialColor;
+        }, delay);
     }
 }

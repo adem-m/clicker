@@ -16,12 +16,12 @@ import { MatSidenav } from '@angular/material/sidenav';
         trigger('animationTrigger', [
             transition(':enter', [
                 style({ opacity: 0 }),
-                animate('700ms', keyframes([
+                animate('500ms', keyframes([
                     style({ opacity: 1 })
                 ])),
             ]),
             transition(':leave', [
-                animate('700ms', style({ opacity: 0 }))
+                animate('500ms', style({ opacity: 0 }))
             ])
         ]),
     ]
@@ -57,7 +57,7 @@ export class AppComponent {
         }
     }
     variablesUpdate() {
-        if (Math.floor(Math.random() * 80) === 0) {
+        if (Math.floor(Math.random() * 75) === 0) {
             this.appService.pointsPerClick++;
         }
         if (Math.floor(Math.random() * 100) === 0) {
@@ -88,6 +88,12 @@ export class AppComponent {
                 this.appService.score += this.appService.pointsPerSecond;
                 this.appService.bonusUnlockChecker();
                 this.save(this.appService.score);
+                if (Math.floor(Math.random() * 100) === 0) {
+                    this.runBonusTime(Math.floor(Math.random() * 5000) + 5000);
+                }
+                if (Math.floor(Math.random() * 150) === 0) {
+                    this.runMalusTime(Math.floor(Math.random() * 5000) + 5000);
+                }
             }, 1000);
         }
     }
@@ -131,6 +137,37 @@ export class AppComponent {
         if (this.appService.firstDrawer) {
             this.appService.firstDrawer = false;
             this.dialog.open(BonusDialogComponent);
+        }
+    }
+    runBonusTime(delay: number) {
+        if (!this.appService.bonusActive) {
+            this.appService.bonusActive = true;
+            this.appService.snackDisplay('Temps additionnel ! Points par clic quadruplés pendant les prochaines secondes', 5000);
+            const initialPPC = this.appService.pointsPerClick;
+            this.appService.pointsPerClick *= 4;
+            this.appService.changeStatColor('green', delay, 'ppc');
+            this.appService.changeBackgroundColor('#334034', delay);
+            setTimeout(() => {
+                this.appService.pointsPerClick = initialPPC;
+                this.appService.bonusActive = false;
+            }, delay);
+        }
+    }
+    runMalusTime(delay: number) {
+        if (!this.appService.bonusActive) {
+            this.appService.bonusActive = true;
+            this.appService.snackDisplay('Mi-temps ! Relâche la pression ou tu vas te faire un claquage', 5000);
+            const initialPPC = this.appService.pointsPerClick;
+            const initialPPS = this.appService.pointsPerSecond;
+            this.appService.pointsPerClick *= -1;
+            this.appService.pointsPerSecond = 0;
+            this.appService.changeStatColor('red', delay);
+            this.appService.changeBackgroundColor('#423434', delay);
+            setTimeout(() => {
+                this.appService.pointsPerClick = initialPPC;
+                this.appService.pointsPerSecond = initialPPS;
+                this.appService.bonusActive = false;
+            }, delay);
         }
     }
 }

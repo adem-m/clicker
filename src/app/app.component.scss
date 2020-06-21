@@ -1,8 +1,10 @@
-.body {
+#body {
     background-color: rgb(65, 65, 65);
     color: white;
     text-align: center;
     height: calc(100vh - 110px);
+    transition-property: background-color;
+    transition-duration: 500ms;
 }
 .game {
     margin: 1em;
@@ -15,6 +17,14 @@
 }
 .stats {
     font-style: italic;
+}
+#ppc {
+    transition-property: color;
+    transition-duration: 500ms;
+}
+#pps {
+    transition-property: color;
+    transition-duration: 500ms;
 }
 .image {
     margin: 2em 0;
@@ -70,7 +80,7 @@ button {
     background-color: rgb(48, 48, 48);
     display: flex;
     justify-content: space-between;
-    padding: 0 0.5em;
+    padding-right: 0.5em;
     height: 56px;
 }
 .name {
