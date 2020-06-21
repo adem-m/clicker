@@ -41,6 +41,10 @@
     animation: juggling 1s infinite steps(2, jump-both);
     margin: 2em;
 }
+.rotate {
+    animation: rotation 2s infinite linear;
+    margin: 2em;
+}
 @keyframes rotation {
     from {
         transform: rotate(0deg);

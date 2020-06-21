@@ -14,13 +14,13 @@ export class CookiesService {
     }
     getPPC() {
         if (this.cookieService.check('ppc')) {
-            return parseInt(this.cookieService.get('ppc'), 10);
+            return Math.sqrt(Math.pow(parseInt(this.cookieService.get('ppc'), 10), 2));
         }
         return 1;
     }
     getPPS() {
         if (this.cookieService.check('pps')) {
-            return parseInt(this.cookieService.get('pps'), 10);
+            return Math.sqrt(Math.pow(parseInt(this.cookieService.get('pps'), 10), 2));
         }
         return 0;
     }

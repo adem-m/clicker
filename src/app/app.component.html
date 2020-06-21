@@ -15,16 +15,19 @@
             Points par seconde: <span id="pps">{{ getPPS() }}</span>
         </div>
         <div class="images">
-            <img @animationTrigger src="{{ getImageName() }}" height="150px" class="juggle firstImage"
+            <img @animationTrigger src="{{ getImageName() }}" height="150px" class="{{ getAnimation() }} firstImage"
                 *ngIf="getImageStatus()">
             <img src="assets/img/1.png" (click)="updateScore()" class="image">
-            <img @animationTrigger src="{{ getImageName() }}" height="150px" class="juggle" *ngIf="getImageStatus()">
+            <img @animationTrigger src="{{ getImageName() }}" height="150px" class="{{ getAnimation() }}"
+                *ngIf="getImageStatus()">
         </div>
         <button mat-stroked-button id="bonusButton" color="primary" (click)="toggleDrawer()">Voir les bonus</button>
     </div>
 </mat-drawer-container>
 <div class="footer">
-    <button mat-icon-button [matMenuTriggerFor]="menu" style="color: white;"><mat-icon>more_vert</mat-icon></button>
+    <button mat-icon-button [matMenuTriggerFor]="menu" style="color: white;">
+        <mat-icon>more_vert</mat-icon>
+    </button>
     <mat-menu #menu="matMenu">
         <button mat-menu-item (click)="openResetDialog()" style="margin: 0;">Reset</button>
     </mat-menu>

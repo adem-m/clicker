@@ -114,12 +114,14 @@ export class BonusDrawerComponent implements OnInit {
             const chance = Math.floor(Math.random() * this.devilDealBonuses.length);
             this.appService.pointsPerClick *= 2;
             this.appService.pointsPerSecond *= 2;
+            this.appService.animation = 'juggle';
             this.appService.snackDisplay(this.devilDealBonuses[chance][0], 4000);
             this.appService.displayImage(this.devilDealBonuses[chance][1], delay);
             this.appService.changeStatColor('green', delay);
         } else if (rand === 99) {
             this.appService.pointsPerClick *= 12;
             this.appService.pointsPerSecond *= 12;
+            this.appService.animation = 'juggle';
             this.appService.snackDisplay('PARDON ?! RRRRRRONALDO A L\'OGCNICE ?!');
             this.appService.displayImage('ronaldo', 10000);
             this.appService.changeStatColor('yellow', 10000);
@@ -127,6 +129,7 @@ export class BonusDrawerComponent implements OnInit {
             const chance = Math.floor(Math.random() * this.devilDealMaluses.length);
             this.appService.pointsPerClick = Math.floor(this.appService.pointsPerClick / 2);
             this.appService.pointsPerSecond = Math.floor(this.appService.pointsPerSecond / 2);
+            this.appService.animation = 'rotate';
             this.appService.snackDisplay(this.devilDealMaluses[chance][0], 4000);
             this.appService.displayImage(this.devilDealMaluses[chance][1], delay);
             this.appService.changeStatColor('red', delay);

@@ -132,6 +132,9 @@ export class AppComponent {
     getImageName() {
         return this.appService.imageName;
     }
+    getAnimation() {
+        return this.appService.animation;
+    }
     toggleDrawer() {
         this.drawer.toggle();
         if (this.appService.firstDrawer) {

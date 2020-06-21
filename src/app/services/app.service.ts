@@ -11,7 +11,8 @@ export class AppService {
     ppsBoostTaken = 0;
     devilDealCharge = 0;
     atalCharge = 0;
-    imageName = 'ronaldo';
+    imageName = 'assets/img/ronaldo.png';
+    animation = 'juggle';
     imageDisplayed = false;
     bonusUnlocked = 0;
     mobile = false;
