@@ -98,9 +98,6 @@ export class AppComponent {
         }
     }
     save(score: number) {
-        this.cookieService.setScore(score);
-        this.cookieService.setPPC(this.appService.pointsPerClick);
-        this.cookieService.setPPS(this.appService.pointsPerSecond - 1);
         this.cookieService.setPPCBoost(this.appService.ppcBoostTaken);
         this.cookieService.setPPSBoost(this.appService.ppsBoostTaken);
         this.cookieService.setDevilDealCharge(this.appService.devilDealCharge);
@@ -108,6 +105,11 @@ export class AppComponent {
         this.cookieService.setBonusUnlocked(this.appService.bonusUnlocked);
         this.cookieService.setNewGame(this.appService.newGame);
         this.cookieService.setFirstDrawer(this.appService.firstDrawer);
+        if (!this.appService.bonusActive) {
+            this.cookieService.setScore(score);
+            this.cookieService.setPPC(this.appService.pointsPerClick);
+            this.cookieService.setPPS(this.appService.pointsPerSecond - 1);
+        }
     }
     openResetDialog() {
         this.dialog.open(ResetDialogComponent);

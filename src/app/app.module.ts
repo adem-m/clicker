@@ -19,8 +19,8 @@ import { MatTooltipModule } from '@angular/material/tooltip';
 import { MatDividerModule } from '@angular/material/divider';
 import { MatIconModule } from '@angular/material/icon';
 import { MatProgressBarModule } from '@angular/material/progress-bar';
-import {MatMenuModule} from '@angular/material/menu';
-
+import { MatMenuModule } from '@angular/material/menu';
+import { MatExpansionModule } from '@angular/material/expansion';
 
 @NgModule({
   declarations: [
@@ -43,6 +43,7 @@ import {MatMenuModule} from '@angular/material/menu';
     MatIconModule,
     MatProgressBarModule,
     MatMenuModule,
+    MatExpansionModule,
   ],
   providers: [AppService, CookieService, CookiesService],
   bootstrap: [AppComponent]

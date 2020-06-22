@@ -2,7 +2,7 @@
     background-color: rgb(65, 65, 65);
     color: white;
     text-align: center;
-    height: calc(100vh - 110px);
+    height: calc(100vh - 94px);
     transition-property: background-color;
     transition-duration: 500ms;
 }
@@ -14,9 +14,11 @@
 }
 .score {
     font-size: 2em;
+    overflow-wrap: break-word;
 }
 .stats {
     font-style: italic;
+    overflow-wrap: break-word;
 }
 #ppc {
     transition-property: color;
@@ -65,7 +67,7 @@ button {
     margin: 8px;
 }
 .drawer {
-    width: 50%;
+    width: 85%;
     max-width: 400px;
     background-color: #555555;
     color: white;
@@ -85,10 +87,13 @@ button {
     display: flex;
     justify-content: space-between;
     padding-right: 0.5em;
-    height: 56px;
+    height: 40px;
+}
+.optionButton {
+    margin: 0;
 }
 .name {
-    color: white;
+    color: rgb(77, 77, 77);
     font-weight: 600;
     margin: 0.5em;
 }

@@ -23,30 +23,35 @@ export class AppService {
     bonuses = [
         {
             color: 'basic',
-            tooltip: 'Points par clic +2',
+            tooltip: 'Les points par clic augmentent de 2',
             method: 'ppcBonus',
             buttonText: 'Tir cadré',
             unlockScore: 300,
             unlocked: false,
             cooldown: false,
+            multipleButtons: true,
         },
         {
             color: 'primary',
-            tooltip: 'Points par seconde +5',
+            tooltip: 'Les points par seconde augmentent de 5',
             method: 'ppsBonus',
             buttonText: 'La possession',
             unlockScore: 1000,
             unlocked: false,
             cooldown: false,
+            multipleButtons: true,
         },
         {
             color: 'warn',
-            tooltip: '70%  de chance de doubler tes stats, 29% de chance de les diviser par deux, 1% de chance de les multiplier par 12',
+            tooltip: `70%  de chance de doubler tes stats<br>
+            29% de chance de les diviser par deux<br>
+            1% de chance de les multiplier par 12`,
             method: 'devilDeal',
             buttonText: 'Mercato',
             unlockScore: 15000,
             unlocked: false,
             cooldown: true,
+            multipleButtons: false,
         },
         {
             color: 'accent',
@@ -56,6 +61,7 @@ export class AppService {
             unlockScore: 200000,
             unlocked: false,
             cooldown: true,
+            multipleButtons: false,
         },
     ];
 

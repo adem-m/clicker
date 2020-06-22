@@ -1,18 +1,33 @@
-<div *ngFor="let bonus of getBonuses(); last as last; index as i">
-    <div @animationTrigger class="bonus" *ngIf="getBonusUnlocked() > i">
-        <div class="button">
-            <button mat-raised-button color="{{ bonus.color }}" matTooltip="{{ bonus.tooltip }}"
-                (click)="onClickMethod(bonus.method)"
-                disabled="{{ bonus.cooldown ? getCooldown(bonus.method) < 100 || getBonusActive()
+<div style="margin: 0.7em">
+    <mat-accordion>
+        <mat-expansion-panel *ngFor="let bonus of getBonuses(); index as i" disabled="{{ getBonusUnlocked() <= i }}">
+            <mat-expansion-panel-header>
+                <mat-panel-title @animationTrigger *ngIf="getBonusUnlocked() > i">
+                    {{ bonus.buttonText }}
+                </mat-panel-title>
+                <mat-panel-description *ngIf="getBonusUnlocked() <= i">
+                    <mat-icon>lock</mat-icon> {{ numberFormatter(bonus.unlockScore) }}
+                </mat-panel-description>
+            </mat-expansion-panel-header>
+            <div class="description">
+                <h5>Description</h5>
+                <div [innerHTML]="bonus.tooltip"></div>
+                <h5 style="margin-top: 2em;">Coût</h5>
+                {{ numberFormatter(getCostMethod(bonus.method)) }}
+            </div>
+            <div class="button">
+                <button mat-raised-button color="{{ bonus.color }}" (click)="onClickMethod(bonus.method)" disabled="{{ bonus.cooldown ? getCooldown(bonus.method) < 100 || getBonusActive()
                     : getCostMethod(bonus.method) > getScore() || getBonusActive() }}">
-                {{ bonus.buttonText }}</button>
-            <mat-progress-bar *ngIf="bonus.cooldown" mode="determinate" value="{{ getCooldown(bonus.method) }}">
-            </mat-progress-bar>
-        </div>
-        <div class="cost">{{ numberFormatter(getCostMethod(bonus.method)) }}</div>
-    </div>
-    <div class="locked" *ngIf="getBonusUnlocked() <= i">
-        <mat-icon>lock</mat-icon> {{ numberFormatter(bonus.unlockScore) }}
-    </div>
-    <mat-divider *ngIf="!last"></mat-divider>
+                    Acheter</button>
+                <span *ngIf="bonus.multipleButtons">
+                    <button mat-raised-button color="{{ bonus.color }}" (click)="onClickMethod(bonus.method, 10)"
+                        disabled="{{getCostMethod(bonus.method, 10) > getScore() || getBonusActive()}}">x10</button>
+                    <button mat-raised-button color="{{ bonus.color }}" (click)="onClickMethod(bonus.method, 100)"
+                        disabled="{{getCostMethod(bonus.method, 100) > getScore() || getBonusActive()}}">x100</button>
+                </span>
+                <mat-progress-bar *ngIf="bonus.cooldown" mode="determinate" value="{{ getCooldown(bonus.method) }}">
+                </mat-progress-bar>
+            </div>
+        </mat-expansion-panel>
+    </mat-accordion>
 </div>

@@ -59,13 +59,13 @@ export class BonusDrawerComponent implements OnInit {
     getBonusUnlocked() {
         return this.appService.bonusUnlocked;
     }
-    onClickMethod(method: string) {
+    onClickMethod(method: string, multiplier = 1) {
         switch (method) {
             case 'ppcBonus':
-                this.ppcBonus();
+                this.ppcBonus(multiplier);
                 break;
             case 'ppsBonus':
-                this.ppsBonus();
+                this.ppsBonus(multiplier);
                 break;
             case 'devilDeal':
                 this.devilDeal();
@@ -77,12 +77,12 @@ export class BonusDrawerComponent implements OnInit {
                 break;
         }
     }
-    getCostMethod(method: string) {
+    getCostMethod(method: string, multiplier = 1) {
         switch (method) {
             case 'ppcBonus':
-                return this.getPPCBonusCost();
+                return this.getPPCBonusCost(multiplier);
             case 'ppsBonus':
-                return this.getPPSBonusCost();
+                return this.getPPSBonusCost(multiplier);
             case 'devilDeal':
                 return this.getDevilDealCost();
             case 'atal':
@@ -91,19 +91,25 @@ export class BonusDrawerComponent implements OnInit {
                 break;
         }
     }
-    ppcBonus() {
-        this.appService.score -= this.getPPCBonusCost();
-        this.appService.pointsPerClick += 2;
-        this.appService.ppcBoostTaken++;
+    ppcBonus(multiplier = 1) {
+        this.appService.score -= this.getPPCBonusCost(multiplier);
+        this.appService.pointsPerClick += 2 * multiplier;
+        this.appService.ppcBoostTaken += multiplier;
         this.appService.snackDisplay('Eh c\'est le but !', 1000);
         this.appService.changeStatColor('green', 1000, 'ppc');
+        if (this.appService.mobile) {
+            this.appComponent.toggleDrawer();
+        }
     }
-    ppsBonus() {
-        this.appService.score -= this.getPPSBonusCost();
-        this.appService.pointsPerSecond += 5;
-        this.appService.ppsBoostTaken++;
+    ppsBonus(multiplier = 1) {
+        this.appService.score -= this.getPPSBonusCost(multiplier);
+        this.appService.pointsPerSecond += 5 * multiplier;
+        this.appService.ppsBoostTaken += multiplier;
         this.appService.snackDisplay('La belle passe !', 1000);
         this.appService.changeStatColor('green', 1000, 'pps');
+        if (this.appService.mobile) {
+            this.appComponent.toggleDrawer();
+        }
     }
     devilDeal() {
         const delay = 5000;
@@ -146,6 +152,7 @@ export class BonusDrawerComponent implements OnInit {
         this.appService.snackDisplay('Ca va dribbler sale !');
         this.appService.displayImage('atal', delay);
         this.appService.changeStatColor('blue', delay, 'pps');
+        this.appComponent.toggleDrawer();
         setTimeout(() => {
             this.appService.pointsPerSecond -= ppsBonus;
             this.appService.bonusActive = false;
@@ -154,11 +161,21 @@ export class BonusDrawerComponent implements OnInit {
             }
         }, delay);
     }
-    getPPCBonusCost() {
-        return (this.appService.ppcBoostTaken * 150) + 300;
+    getPPCBonusCost(multiplier = 1) {
+        const base = (this.appService.ppcBoostTaken * 150) + 300;
+        let cost = 0;
+        for (let i = 0; i < multiplier; i++) {
+            cost += base + i * 150;
+        }
+        return cost;
     }
-    getPPSBonusCost() {
-        return (this.appService.ppsBoostTaken * 200) + 1000;
+    getPPSBonusCost(multiplier = 1) {
+        const base = (this.appService.ppsBoostTaken * 200) + 1000;
+        let cost = 0;
+        for (let i = 0; i < multiplier; i++) {
+            cost += base + i * 200;
+        }
+        return cost;
     }
     getCooldown(method: string) {
         switch (method) {
