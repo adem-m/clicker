@@ -21,6 +21,7 @@ import { MatIconModule } from '@angular/material/icon';
 import { MatProgressBarModule } from '@angular/material/progress-bar';
 import { MatMenuModule } from '@angular/material/menu';
 import { MatExpansionModule } from '@angular/material/expansion';
+import { EuropeDialogComponent } from './europe-dialog/europe-dialog.component';
 
 @NgModule({
   declarations: [
@@ -28,7 +29,8 @@ import { MatExpansionModule } from '@angular/material/expansion';
     ResetDialogComponent,
     BonusDrawerComponent,
     NewGameDialogComponent,
-    BonusDialogComponent
+    BonusDialogComponent,
+    EuropeDialogComponent
   ],
   imports: [
     BrowserModule,

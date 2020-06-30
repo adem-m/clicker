@@ -45,6 +45,8 @@ export class AppComponent {
         this.appService.ppsBoostTaken = this.cookieService.getPPSBoost();
         this.appService.devilDealCharge = this.cookieService.getDevilDealCharge();
         this.appService.atalCharge = this.cookieService.getAtalCharge();
+        this.appService.europeCharge = this.cookieService.getEuropeCharge();
+        this.appService.europeTaken = this.cookieService.getEuropeBoost();
         this.appService.bonusUnlocked = this.cookieService.getBonusUnlocked();
         if (this.cookieService.getNewGame() === 0) {
             this.appService.newGame = false;
@@ -57,11 +59,13 @@ export class AppComponent {
         }
     }
     variablesUpdate() {
-        if (Math.floor(Math.random() * 75) === 0) {
-            this.appService.pointsPerClick++;
-        }
-        if (Math.floor(Math.random() * 100) === 0) {
-            this.appService.pointsPerSecond++;
+        if (!this.appService.bonusActive) {
+            if (Math.floor(Math.random() * 75) === 0) {
+                this.appService.pointsPerClick++;
+            }
+            if (Math.floor(Math.random() * 100) === 0) {
+                this.appService.pointsPerSecond++;
+            }
         }
     }
     getScore() {
@@ -79,6 +83,7 @@ export class AppComponent {
         this.appService.bonusUnlockChecker();
         this.devilDealChargeUp();
         this.atalChargeUp();
+        this.europeChargeUp();
         this.save(this.appService.score);
         this.variablesUpdate();
         if (!this.gameStarted) {
@@ -102,6 +107,8 @@ export class AppComponent {
         this.cookieService.setPPSBoost(this.appService.ppsBoostTaken);
         this.cookieService.setDevilDealCharge(this.appService.devilDealCharge);
         this.cookieService.setAtalCharge(this.appService.atalCharge);
+        this.cookieService.setEuropeCharge(this.appService.europeCharge);
+        this.cookieService.setEuropeBoost(this.appService.europeTaken);
         this.cookieService.setBonusUnlocked(this.appService.bonusUnlocked);
         this.cookieService.setNewGame(this.appService.newGame);
         this.cookieService.setFirstDrawer(this.appService.firstDrawer);
@@ -128,6 +135,12 @@ export class AppComponent {
             this.appService.atalCharge += 0.25;
         }
     }
+    europeChargeUp() {
+        if (this.appService.europeCharge < 100) {
+            this.appService.europeCharge += 0.1;
+        }
+        // this.appService.europeCharge = 100;
+    }
     getImageStatus() {
         return this.appService.imageDisplayed;
     }
@@ -138,6 +151,7 @@ export class AppComponent {
         return this.appService.animation;
     }
     toggleDrawer() {
+        this.drawer.autoFocus = false;
         this.drawer.toggle();
         if (this.appService.firstDrawer) {
             this.appService.firstDrawer = false;

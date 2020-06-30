@@ -1,0 +1,22 @@
+<div class="dialog">
+    <h1 mat-dialog-title>Coupe d'Europe</h1>
+    <div mat-dialog-content>
+        Clique aussi vite que possible sur ce trophée pendant 10 secondes.
+        <div class="content">
+            <div class="timer">
+                <h5>Temps restant</h5>
+                {{ timer / 10 }}
+            </div>
+            <img src="assets/img/{{ img }}.png" height="150px" (click)="startCountdown()">
+            <div class="clicks">
+                <h5>Clics</h5>
+                {{ clicks }}
+            </div>
+        </div>
+        <div class="bonuses">
+            <h4 id="bonusHeader">Bonus</h4>
+            <div id="ppClick">Points par clic <b>+{{ displayedPPC }}</b></div>
+            <div id="ppSecond">Points par seconde <b>+{{ displayedPPS }}</b></div>
+        </div>
+    </div>
+</div>

@@ -1,7 +1,9 @@
 import { Component, OnInit } from '@angular/core';
 import { AppService } from '../services/app.service';
 import { trigger, state, style, animate, transition, keyframes } from '@angular/animations';
+import { MatDialog } from '@angular/material/dialog';
 import { AppComponent } from '../app.component';
+import { EuropeDialogComponent } from '../europe-dialog/europe-dialog.component';
 
 @Component({
     selector: 'app-bonus-drawer',
@@ -42,7 +44,7 @@ export class BonusDrawerComponent implements OnInit {
         ['Ben Arfa monte à la capitale, tu perds ton 9', 'benarfagone']
     ];
 
-    constructor(private appService: AppService, private appComponent: AppComponent) {
+    constructor(private appService: AppService, private appComponent: AppComponent, private dialog: MatDialog) {
     }
 
     ngOnInit(): void {
@@ -73,6 +75,9 @@ export class BonusDrawerComponent implements OnInit {
             case 'atal':
                 this.atalBonus();
                 break;
+            case 'europe':
+                this.europeBonus();
+                break;
             default:
                 break;
         }
@@ -87,8 +92,10 @@ export class BonusDrawerComponent implements OnInit {
                 return this.getDevilDealCost();
             case 'atal':
                 return this.getAtalCost();
+            case 'europe':
+                return this.getEuropeCost();
             default:
-                break;
+                return 0;
         }
     }
     ppcBonus(multiplier = 1) {
@@ -161,6 +168,13 @@ export class BonusDrawerComponent implements OnInit {
             }
         }, delay);
     }
+    europeBonus() {
+        this.appService.bonusActive = true;
+        this.appService.europeCharge = 0;
+        this.appService.score -= this.getEuropeCost();
+        this.dialog.open(EuropeDialogComponent, { disableClose: true });
+        this.appComponent.toggleDrawer();
+    }
     getPPCBonusCost(multiplier = 1) {
         const base = (this.appService.ppcBoostTaken * 150) + 300;
         let cost = 0;
@@ -180,24 +194,23 @@ export class BonusDrawerComponent implements OnInit {
     getCooldown(method: string) {
         switch (method) {
             case 'devilDeal':
-                return this.getDevilDealCharge();
+                return this.appService.devilDealCharge;
             case 'atal':
-                return this.getAtalCharge();
+                return this.appService.atalCharge;
+            case 'europe':
+                return this.appService.europeCharge;
             default:
                 return 0;
         }
     }
-    getDevilDealCharge() {
-        return this.appService.devilDealCharge;
-    }
     getDevilDealCost() {
         return Math.floor(this.appService.score * 0.7);
     }
-    getAtalCharge() {
-        return this.appService.atalCharge;
-    }
     getAtalCost() {
         return Math.floor(this.appService.score * 0.1);
+    }
+    getEuropeCost() {
+        return Math.floor((100000 * Math.pow(this.appService.europeTaken, 1.6) + 300000) / 1000) * 1000;
     }
     getBonusActive() {
         return this.appService.bonusActive;

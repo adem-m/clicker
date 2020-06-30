@@ -29,11 +29,11 @@
     transition-duration: 500ms;
 }
 .image {
-    margin: 2em 0;
     max-height: 250px;
     animation: rotation 60s infinite linear;
 }
 .images {
+    padding: 2em 0;
     display: flex;
     align-items: center;
     justify-content: center;

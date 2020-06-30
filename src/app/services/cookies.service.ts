@@ -48,6 +48,18 @@ export class CookiesService {
         }
         return 0;
     }
+    getEuropeBoost() {
+        if (this.cookieService.check('europeBoost')) {
+            return parseInt(this.cookieService.get('europeBoost'), 10);
+        }
+        return 0;
+    }
+    getEuropeCharge() {
+        if (this.cookieService.check('europeCharge')) {
+            return parseInt(this.cookieService.get('europeCharge'), 10);
+        }
+        return 0;
+    }
     getBonusUnlocked() {
         if (this.cookieService.check('bonusUnlocked')) {
             return parseInt(this.cookieService.get('bonusUnlocked'), 10);
@@ -86,6 +98,12 @@ export class CookiesService {
     }
     setAtalCharge(atalCharge: number) {
         this.cookieService.set('atalCharge', Math.floor(atalCharge).toString(), 99999);
+    }
+    setEuropeCharge(europeCharge: number) {
+        this.cookieService.set('europeCharge', Math.floor(europeCharge).toString(), 99999);
+    }
+    setEuropeBoost(europeBoost: number) {
+        this.cookieService.set('europeBoost', Math.floor(europeBoost).toString(), 99999);
     }
     setBonusUnlocked(bonusUnlocked: number) {
         this.cookieService.set('bonusUnlocked', Math.floor(bonusUnlocked).toString(), 99999);

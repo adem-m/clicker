@@ -11,6 +11,8 @@ export class AppService {
     ppsBoostTaken = 0;
     devilDealCharge = 0;
     atalCharge = 0;
+    europeCharge = 0;
+    europeTaken = 0;
     imageName = 'assets/img/ronaldo.png';
     animation = 'juggle';
     imageDisplayed = false;
@@ -23,7 +25,7 @@ export class AppService {
     bonuses = [
         {
             color: 'basic',
-            tooltip: 'Les points par clic augmentent de 2',
+            tooltip: 'Les points par clic augmentent de 2.',
             method: 'ppcBonus',
             buttonText: 'Tir cadré',
             unlockScore: 300,
@@ -33,7 +35,7 @@ export class AppService {
         },
         {
             color: 'primary',
-            tooltip: 'Les points par seconde augmentent de 5',
+            tooltip: 'Les points par seconde augmentent de 5.',
             method: 'ppsBonus',
             buttonText: 'La possession',
             unlockScore: 1000,
@@ -55,10 +57,20 @@ export class AppService {
         },
         {
             color: 'accent',
-            tooltip: 'Pendant 8 à 16 secondes, tu gagnes 1% de ton score par seconde',
+            tooltip: 'Pendant 8 à 16 secondes, tu gagnes 1% de ton score par seconde.',
             method: 'atal',
             buttonText: 'Atal',
             unlockScore: 200000,
+            unlocked: false,
+            cooldown: true,
+            multipleButtons: false,
+        },
+        {
+            color: 'primary',
+            tooltip: `Bonus de points par clic et par seconde variable. Plus tu cliques vite, plus ton bonus sera élevé.`,
+            method: 'europe',
+            buttonText: 'Coupe d\'Europe',
+            unlockScore: 1000000,
             unlocked: false,
             cooldown: true,
             multipleButtons: false,
@@ -78,6 +90,8 @@ export class AppService {
         this.ppsBoostTaken = 0;
         this.devilDealCharge = 0;
         this.atalCharge = 0;
+        this.europeCharge = 0;
+        this.europeTaken = 0;
         this.bonusUnlocked = 0;
         this.newGame = true;
         this.firstDrawer = true;

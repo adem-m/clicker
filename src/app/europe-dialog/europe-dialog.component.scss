@@ -1,0 +1,20 @@
+.content {
+    display: flex;
+    justify-content: space-around;
+    align-items: center;
+    text-align: center;
+}
+.content img {
+    margin: 2em 1em 0 1em;
+}
+.clicks,
+.timer {
+    width: 100px;
+}
+#ppClick,
+#ppSecond,
+#bonusHeader {
+    font-size: 0;
+    transition-property: font-size;
+    transition-duration: 500ms;
+}
