@@ -77,8 +77,8 @@ export class EuropeDialogComponent implements OnInit {
             this.appService.bonusActive = false;
             this.reset();
             this.appService.changeStatColor('green', 2500);
-            this.appService.pointsPerClick += this.ppc;
-            this.appService.pointsPerSecond += this.pps;
+            this.appService.pointsPerClick = new BigNumber(this.appService.pointsPerClick).plus(this.ppc).toFixed();
+            this.appService.pointsPerSecond = new BigNumber(this.appService.pointsPerSecond).plus(this.pps).toFixed();
             this.appService.europeTaken++;
         }, 3000);
     }

@@ -159,7 +159,7 @@ export class BonusDrawerComponent implements OnInit {
         const ppsBonus = Math.floor(new BigNumber(this.appService.score).times(0.01).toNumber());
         this.appService.atalCharge = 0;
         this.appService.score = new BigNumber(this.appService.score).minus(this.getAtalCost()).toFixed();
-        this.appService.pointsPerSecond += ppsBonus;
+        this.appService.pointsPerSecond = new BigNumber(this.appService.pointsPerSecond).plus(ppsBonus).toFixed();
         this.appService.snackDisplay('Ca va dribbler sale !');
         this.appService.displayImage('atal', delay);
         this.appService.changeStatColor('blue', delay, 'pps');
