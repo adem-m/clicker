@@ -1,12 +1,13 @@
 import { MatSnackBar } from '@angular/material/snack-bar';
 import { Injectable } from '@angular/core';
+import { BigNumber } from 'bignumber.js';
 
 @Injectable()
 
 export class AppService {
-    score = 0;
-    pointsPerClick = 1;
-    pointsPerSecond = 0;
+    score = '0';
+    pointsPerClick = '1';
+    pointsPerSecond = '0';
     ppcBoostTaken = 0;
     ppsBoostTaken = 0;
     devilDealCharge = 0;
@@ -83,9 +84,9 @@ export class AppService {
         }
     }
     reset() {
-        this.score = 0;
-        this.pointsPerClick = 1;
-        this.pointsPerSecond = 0;
+        this.score = '0';
+        this.pointsPerClick = '1';
+        this.pointsPerSecond = '0';
         this.ppcBoostTaken = 0;
         this.ppsBoostTaken = 0;
         this.devilDealCharge = 0;
@@ -99,17 +100,17 @@ export class AppService {
             bonus.unlocked = false;
         });
     }
-    numberFormatter(num: number) {
+    numberFormatter(num: string) {
         let neg = '';
-        if (num < 0) {
-            num *= -1;
+        const n = new BigNumber(num);
+        if (n.isNegative()) {
+            num = n.times(-1).toFixed();
             neg = '-';
         }
-        const currentScore = num.toString();
         let stringBuilder = '';
-        for (let i = 0; i < currentScore.length; i++) {
-            stringBuilder += currentScore[currentScore.length - i - 1];
-            if (i % 3 === 2 && i !== currentScore.length - 1) {
+        for (let i = 0; i < num.length; i++) {
+            stringBuilder += num[num.length - i - 1];
+            if (i % 3 === 2 && i !== num.length - 1) {
                 stringBuilder += ',';
             }
         }
@@ -124,11 +125,12 @@ export class AppService {
     }
     bonusUnlockChecker() {
         let count = 0;
+        const s = new BigNumber(this.score);
         if (this.bonusUnlocked < this.bonuses.length) {
             this.bonuses.forEach(bonus => {
                 if (bonus.unlocked) {
                     count++;
-                } else if (bonus.unlockScore <= this.score) {
+                } else if (s.isGreaterThanOrEqualTo(bonus.unlockScore)) {
                     bonus.unlocked = true;
                     count++;
                 }

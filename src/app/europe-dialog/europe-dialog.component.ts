@@ -1,6 +1,7 @@
 import { Component, OnInit } from '@angular/core';
 import { MatDialog } from '@angular/material/dialog';
 import { AppService } from '../services/app.service';
+import BigNumber from 'bignumber.js';
 
 @Component({
     selector: 'app-europe-dialog',
@@ -65,10 +66,10 @@ export class EuropeDialogComponent implements OnInit {
     }
     computeBonuses() {
         const floor = Math.pow(this.clicks, 1.5) / 6;
-        this.ppc = Math.floor(this.appService.pointsPerClick * (floor / 1000));
-        this.pps = Math.floor(this.appService.pointsPerSecond * (floor / 1000));
-        this.displayedPPC = this.appService.numberFormatter(this.ppc);
-        this.displayedPPS = this.appService.numberFormatter(this.pps);
+        this.ppc = Math.floor(parseInt(this.appService.pointsPerClick, 10) * (floor / 1000));
+        this.pps = Math.floor(parseInt(this.appService.pointsPerSecond, 10) * (floor / 1000));
+        this.displayedPPC = this.appService.numberFormatter(this.ppc.toFixed());
+        this.displayedPPS = this.appService.numberFormatter(this.pps.toFixed());
     }
     closeDialog() {
         setTimeout(() => {

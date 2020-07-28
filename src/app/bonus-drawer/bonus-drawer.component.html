@@ -13,17 +13,17 @@
                 <h5>Description</h5>
                 <div [innerHTML]="bonus.tooltip"></div>
                 <h5 style="margin-top: 2em;">Coût</h5>
-                {{ numberFormatter(getCostMethod(bonus.method)) }}
+                <span style="word-wrap: break-word;">{{ numberFormatter(getCostMethod(bonus.method)) }}</span>
             </div>
             <div class="button">
                 <button mat-raised-button color="{{ bonus.color }}" (click)="onClickMethod(bonus.method)" disabled="{{ bonus.cooldown ? getCooldown(bonus.method) < 100 || getBonusActive()
-                    : getCostMethod(bonus.method) > getScore() || getBonusActive() }}">
+                    : getCostMethod(bonus.method) > getScore(false) || getBonusActive() }}">
                     Acheter</button>
                 <span *ngIf="bonus.multipleButtons">
                     <button mat-raised-button color="{{ bonus.color }}" (click)="onClickMethod(bonus.method, 10)"
-                        disabled="{{getCostMethod(bonus.method, 10) > getScore() || getBonusActive()}}">x10</button>
+                        disabled="{{getCostMethod(bonus.method, 10) > getScore(false) || getBonusActive()}}">x10</button>
                     <button mat-raised-button color="{{ bonus.color }}" (click)="onClickMethod(bonus.method, 100)"
-                        disabled="{{getCostMethod(bonus.method, 100) > getScore() || getBonusActive()}}">x100</button>
+                        disabled="{{getCostMethod(bonus.method, 100) > getScore(false) || getBonusActive()}}">x100</button>
                 </span>
                 <mat-progress-bar *ngIf="bonus.cooldown" mode="determinate" value="{{ getCooldown(bonus.method) }}">
                 </mat-progress-bar>

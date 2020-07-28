@@ -8,21 +8,21 @@ export class CookiesService {
     }
     getScore() {
         if (this.cookieService.check('score')) {
-            return parseInt(this.cookieService.get('score'), 10);
+            return this.cookieService.get('score');
         }
-        return 0;
+        return '0';
     }
     getPPC() {
         if (this.cookieService.check('ppc')) {
-            return Math.sqrt(Math.pow(parseInt(this.cookieService.get('ppc'), 10), 2));
+            return this.cookieService.get('ppc');
         }
-        return 1;
+        return '1';
     }
     getPPS() {
         if (this.cookieService.check('pps')) {
-            return Math.sqrt(Math.pow(parseInt(this.cookieService.get('pps'), 10), 2));
+            return this.cookieService.get('pps');
         }
-        return 0;
+        return '0';
     }
     getPPCBoost() {
         if (this.cookieService.check('ppcBoost')) {
@@ -78,14 +78,14 @@ export class CookiesService {
         }
         return 1;
     }
-    setScore(score: number) {
-        this.cookieService.set('score', score.toString(), 99999);
+    setScore(score: string) {
+        this.cookieService.set('score', score, 99999);
     }
-    setPPC(ppc: number) {
-        this.cookieService.set('ppc', ppc.toString(), 99999);
+    setPPC(ppc: string) {
+        this.cookieService.set('ppc', ppc, 99999);
     }
-    setPPS(pps: number) {
-        this.cookieService.set('pps', pps.toString(), 99999);
+    setPPS(pps: string) {
+        this.cookieService.set('pps', pps, 99999);
     }
     setPPCBoost(ppcBoost: number) {
         this.cookieService.set('ppcBoost', ppcBoost.toString(), 99999);

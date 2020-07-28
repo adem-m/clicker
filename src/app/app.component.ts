@@ -7,6 +7,7 @@ import { NewGameDialogComponent } from './new-game-dialog/new-game-dialog.compon
 import { BonusDialogComponent } from './bonus-dialog/bonus-dialog.component';
 import { trigger, state, style, animate, transition, keyframes } from '@angular/animations';
 import { MatSidenav } from '@angular/material/sidenav';
+import BigNumber from 'bignumber.js';
 
 @Component({
     selector: 'app-root',
@@ -54,17 +55,18 @@ export class AppComponent {
         if (this.cookieService.getFirstDrawer() === 0) {
             this.appService.firstDrawer = false;
         }
-        if (this.appService.pointsPerSecond > 0) {
+        const p = new BigNumber(this.appService.pointsPerSecond);
+        if (p.toNumber() > 0) {
             this.updateScore();
         }
     }
     variablesUpdate() {
         if (!this.appService.bonusActive) {
             if (Math.floor(Math.random() * 75) === 0) {
-                this.appService.pointsPerClick++;
+                this.appService.pointsPerClick = new BigNumber(this.appService.pointsPerClick).plus(1).toFixed();
             }
             if (Math.floor(Math.random() * 100) === 0) {
-                this.appService.pointsPerSecond++;
+                this.appService.pointsPerSecond = new BigNumber(this.appService.pointsPerSecond).plus(1).toFixed();
             }
         }
     }
@@ -79,7 +81,7 @@ export class AppComponent {
     }
     updateScore() {
         this.appService.newGame = false;
-        this.appService.score += this.appService.pointsPerClick;
+        this.appService.score = new BigNumber(this.appService.score).plus(this.appService.pointsPerClick).toFixed();
         this.appService.bonusUnlockChecker();
         this.devilDealChargeUp();
         this.atalChargeUp();
@@ -88,9 +90,9 @@ export class AppComponent {
         this.variablesUpdate();
         if (!this.gameStarted) {
             this.gameStarted = true;
-            this.appService.pointsPerSecond++;
+            this.appService.pointsPerSecond = new BigNumber(this.appService.pointsPerSecond).plus(1).toFixed();
             setInterval(() => {
-                this.appService.score += this.appService.pointsPerSecond;
+                this.appService.score = new BigNumber(this.appService.score).plus(this.appService.pointsPerSecond).toFixed();
                 this.appService.bonusUnlockChecker();
                 this.save(this.appService.score);
                 if (Math.floor(Math.random() * 100) === 0) {
@@ -102,7 +104,7 @@ export class AppComponent {
             }, 1000);
         }
     }
-    save(score: number) {
+    save(score: string) {
         this.cookieService.setPPCBoost(this.appService.ppcBoostTaken);
         this.cookieService.setPPSBoost(this.appService.ppsBoostTaken);
         this.cookieService.setDevilDealCharge(this.appService.devilDealCharge);
@@ -115,7 +117,7 @@ export class AppComponent {
         if (!this.appService.bonusActive) {
             this.cookieService.setScore(score);
             this.cookieService.setPPC(this.appService.pointsPerClick);
-            this.cookieService.setPPS(this.appService.pointsPerSecond - 1);
+            this.cookieService.setPPS(new BigNumber(this.appService.pointsPerSecond).minus(1).toFixed());
         }
     }
     openResetDialog() {
@@ -163,7 +165,7 @@ export class AppComponent {
             this.appService.bonusActive = true;
             this.appService.snackDisplay('Temps additionnel ! Points par clic quadruplés pendant les prochaines secondes', 5000);
             const initialPPC = this.appService.pointsPerClick;
-            this.appService.pointsPerClick *= 4;
+            this.appService.pointsPerClick = new BigNumber(this.appService.pointsPerClick).times(4).toFixed();
             this.appService.changeStatColor('green', delay, 'ppc');
             this.appService.changeBackgroundColor('#334034', delay);
             setTimeout(() => {
@@ -178,8 +180,8 @@ export class AppComponent {
             this.appService.snackDisplay('Mi-temps ! Relâche la pression ou tu vas te faire un claquage', 5000);
             const initialPPC = this.appService.pointsPerClick;
             const initialPPS = this.appService.pointsPerSecond;
-            this.appService.pointsPerClick *= -1;
-            this.appService.pointsPerSecond = 0;
+            this.appService.pointsPerClick = new BigNumber(this.appService.pointsPerClick).times(-1).toFixed();
+            this.appService.pointsPerSecond = '0';
             this.appService.changeStatColor('red', delay);
             this.appService.changeBackgroundColor('#423434', delay);
             setTimeout(() => {
