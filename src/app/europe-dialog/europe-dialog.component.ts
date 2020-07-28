@@ -14,8 +14,8 @@ export class EuropeDialogComponent implements OnInit {
     started = false;
     displayedPPC: string;
     displayedPPS: string;
-    ppc: number;
-    pps: number;
+    ppc: string;
+    pps: string;
     img = 'c1';
 
     constructor(private module: MatDialog, private appService: AppService) {
@@ -66,10 +66,10 @@ export class EuropeDialogComponent implements OnInit {
     }
     computeBonuses() {
         const floor = Math.pow(this.clicks, 1.5) / 6;
-        this.ppc = Math.floor(parseInt(this.appService.pointsPerClick, 10) * (floor / 1000));
-        this.pps = Math.floor(parseInt(this.appService.pointsPerSecond, 10) * (floor / 1000));
-        this.displayedPPC = this.appService.numberFormatter(this.ppc.toFixed());
-        this.displayedPPS = this.appService.numberFormatter(this.pps.toFixed());
+        this.ppc = new BigNumber(this.appService.pointsPerClick).times(floor / 1000).dp(0, 1).toFixed();
+        this.pps = new BigNumber(this.appService.pointsPerSecond).times(floor / 1000).dp(0, 1).toFixed();
+        this.displayedPPC = this.appService.numberFormatter(this.ppc);
+        this.displayedPPS = this.appService.numberFormatter(this.pps);
     }
     closeDialog() {
         setTimeout(() => {

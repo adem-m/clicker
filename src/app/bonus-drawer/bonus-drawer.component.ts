@@ -156,7 +156,7 @@ export class BonusDrawerComponent implements OnInit {
     atalBonus() {
         this.appService.bonusActive = true;
         const delay = Math.floor(Math.random() * 8000) + 8000;
-        const ppsBonus = Math.floor(new BigNumber(this.appService.score).times(0.01).toNumber());
+        const ppsBonus = new BigNumber(this.appService.score).times(0.01).dp(0, 1).toNumber();
         this.appService.atalCharge = 0;
         this.appService.score = new BigNumber(this.appService.score).minus(this.getAtalCost()).toFixed();
         this.appService.pointsPerSecond = new BigNumber(this.appService.pointsPerSecond).plus(ppsBonus).toFixed();

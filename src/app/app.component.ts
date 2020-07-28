@@ -82,6 +82,7 @@ export class AppComponent {
     updateScore() {
         this.appService.newGame = false;
         this.appService.score = new BigNumber(this.appService.score).plus(this.appService.pointsPerClick).toFixed();
+        // this.appService.score = new BigNumber(this.appService.score).plus(99999999999999999999999999).toFixed();
         this.appService.bonusUnlockChecker();
         this.devilDealChargeUp();
         this.atalChargeUp();
@@ -136,6 +137,7 @@ export class AppComponent {
         if (this.appService.atalCharge < 100) {
             this.appService.atalCharge += 0.25;
         }
+        // this.appService.atalCharge = 100;
     }
     europeChargeUp() {
         if (this.appService.europeCharge < 100) {
